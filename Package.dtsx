@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+﻿<?xml version="1.0"?>
 <DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
   DTS:refId="Package"
   DTS:CreationDate="3/30/2024 5:13:47 PM"
@@ -11,9 +11,1171 @@
   DTS:LocaleID="1033"
   DTS:ObjectName="Package"
   DTS:PackageType="5"
-  DTS:VersionGUID="{100903C7-33C2-4D90-98A4-C4B5ADBBE070}">
+  DTS:VersionBuild="61"
+  DTS:VersionGUID="{9F2076F3-0806-42A5-8C01-7B3AA0EB5883}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[DESKTOP-UO8UD6K.KoreAssignment_Yuheng_Miao]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{61F04048-F653-4A7A-92F1-63EF4BB99814}"
+      DTS:ObjectName="DESKTOP-UO8UD6K.KoreAssignment_Yuheng_Miao">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=DESKTOP-UO8UD6K;Initial Catalog=KoreAssignment_Yuheng_Miao;Provider=MSOLEDBSQL.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Flat File Connection Manager]"
+      DTS:CreationName="FLATFILE"
+      DTS:DTSID="{69886E35-1203-4686-80B7-E23CF667CA96}"
+      DTS:ObjectName="Flat File Connection Manager">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:Format="Delimited"
+          DTS:LocaleID="1033"
+          DTS:HeaderRowDelimiter="_x000D__x000A_"
+          DTS:ColumnNamesInFirstDataRow="True"
+          DTS:RowDelimiter=""
+          DTS:TextQualifier="_x003C_none_x003E_"
+          DTS:CodePage="1252"
+          DTS:ConnectionString="C:\Users\RAE\YM\ETLWithSSIS\source.csv">
+          <DTS:FlatFileColumns>
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="UserID"
+              DTS:DTSID="{AAFCC7CD-F582-44AE-91A4-A174B06FA775}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="FullName"
+              DTS:DTSID="{624A0772-7E36-4014-A4F8-3C4BC325C8EA}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="Age"
+              DTS:DTSID="{49E1B51E-FD69-4287-9129-1CCFC4B2B10F}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="Email"
+              DTS:DTSID="{8DE9760F-8FAC-47C0-8726-1A34FB254F5A}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="RegistrationDate"
+              DTS:DTSID="{C42B8E79-7960-4F85-9336-0CBD46564F27}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="LastLoginDate"
+              DTS:DTSID="{A4398885-26C1-40D4-AE3A-29B9C67F8505}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x000D__x000A_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="PurchaseTotal"
+              DTS:DTSID="{D4BA00DE-18B0-4BF4-AF38-6DA5A4C93D49}"
+              DTS:CreationName="" />
+          </DTS:FlatFileColumns>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
   <DTS:Variables />
-  <DTS:Executables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Data Flow"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="数据流任务"
+      DTS:DTSID="{9DB8F4AF-032A-4090-AD75-EA52E8B498AE}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Data Flow"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Data Flow\Cast Data Types"
+              componentClassID="Microsoft.DerivedColumn"
+              contactInfo="派生列;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; 保留所有权利; http://www.microsoft.com/sql/support;0"
+              description="通过对转换输入列应用表达式来创建新的列值。创建新列或覆盖现有列。例如，将 &quot;first name&quot; 列和 &quot;last name&quot; 列中的值连接在一起以创建一个 &quot;full name&quot; 列。"
+              name="Cast Data Types"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Data Flow\Cast Data Types.Inputs[派生列输入]"
+                  description="派生列转换的输入"
+                  name="派生列输入">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Data Flow\Cast Data Types.Inputs[派生列输入].Columns[UserID]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="UserID"
+                      lineageId="Package\Data Flow\Import CSV.Outputs[平面文件源输出].Columns[UserID]" />
+                    <inputColumn
+                      refId="Package\Data Flow\Cast Data Types.Inputs[派生列输入].Columns[FullName]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="FullName"
+                      lineageId="Package\Data Flow\Import CSV.Outputs[平面文件源输出].Columns[FullName]" />
+                    <inputColumn
+                      refId="Package\Data Flow\Cast Data Types.Inputs[派生列输入].Columns[Age]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="Age"
+                      lineageId="Package\Data Flow\Import CSV.Outputs[平面文件源输出].Columns[Age]" />
+                    <inputColumn
+                      refId="Package\Data Flow\Cast Data Types.Inputs[派生列输入].Columns[Email]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="Email"
+                      lineageId="Package\Data Flow\Import CSV.Outputs[平面文件源输出].Columns[Email]" />
+                    <inputColumn
+                      refId="Package\Data Flow\Cast Data Types.Inputs[派生列输入].Columns[RegistrationDate]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="RegistrationDate"
+                      lineageId="Package\Data Flow\Import CSV.Outputs[平面文件源输出].Columns[RegistrationDate]" />
+                    <inputColumn
+                      refId="Package\Data Flow\Cast Data Types.Inputs[派生列输入].Columns[LastLoginDate]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="LastLoginDate"
+                      lineageId="Package\Data Flow\Import CSV.Outputs[平面文件源输出].Columns[LastLoginDate]" />
+                    <inputColumn
+                      refId="Package\Data Flow\Cast Data Types.Inputs[派生列输入].Columns[PurchaseTotal]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="PurchaseTotal"
+                      lineageId="Package\Data Flow\Import CSV.Outputs[平面文件源输出].Columns[PurchaseTotal]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Data Flow\Cast Data Types.Outputs[派生列输出]"
+                  description="派生列转换的默认输出"
+                  exclusionGroup="1"
+                  name="派生列输出"
+                  synchronousInputId="Package\Data Flow\Cast Data Types.Inputs[派生列输入]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow\Cast Data Types.Outputs[派生列输出].Columns[CastUserID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="计算"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Data Flow\Cast Data Types.Outputs[派生列输出].Columns[CastUserID]"
+                      name="CastUserID"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="派生列表达式"
+                          name="Expression">([ISNULL](#{Package\Data Flow\Import CSV.Outputs[平面文件源输出].Columns[UserID]}) || [LEN](#{Package\Data Flow\Import CSV.Outputs[平面文件源输出].Columns[UserID]}) == 0 || [FINDSTRING]([LOWER](#{Package\Data Flow\Import CSV.Outputs[平面文件源输出].Columns[UserID]}),"null",1) != 0) ? NULL(DT_I4) : (DT_I4)#{Package\Data Flow\Import CSV.Outputs[平面文件源输出].Columns[UserID]}</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="派生列友好表达式"
+                          expressionType="Notify"
+                          name="FriendlyExpression">(ISNULL(UserID) || LEN(UserID) == 0 || FINDSTRING(LOWER(UserID),"null",1) != 0) ? NULL(DT_I4) : (DT_I4)UserID</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Data Flow\Cast Data Types.Outputs[派生列输出].Columns[CastFullName]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="计算"
+                      errorRowDisposition="FailComponent"
+                      length="255"
+                      lineageId="Package\Data Flow\Cast Data Types.Outputs[派生列输出].Columns[CastFullName]"
+                      name="CastFullName"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="派生列表达式"
+                          name="Expression">([ISNULL](#{Package\Data Flow\Import CSV.Outputs[平面文件源输出].Columns[FullName]}) || [LEN](#{Package\Data Flow\Import CSV.Outputs[平面文件源输出].Columns[FullName]}) == 0 || [FINDSTRING]([LOWER](#{Package\Data Flow\Import CSV.Outputs[平面文件源输出].Columns[FullName]}),"null",1) != 0) ? NULL(DT_WSTR,225) : #{Package\Data Flow\Import CSV.Outputs[平面文件源输出].Columns[FullName]}</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="派生列友好表达式"
+                          expressionType="Notify"
+                          name="FriendlyExpression">(ISNULL(FullName) || LEN(FullName) == 0 || FINDSTRING(LOWER(FullName),"null",1) != 0) ? NULL(DT_WSTR,225) : FullName</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Data Flow\Cast Data Types.Outputs[派生列输出].Columns[CastAge]"
+                      dataType="i4"
+                      errorOrTruncationOperation="计算"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Data Flow\Cast Data Types.Outputs[派生列输出].Columns[CastAge]"
+                      name="CastAge"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="派生列表达式"
+                          name="Expression">([ISNULL](#{Package\Data Flow\Import CSV.Outputs[平面文件源输出].Columns[Age]}) || [LEN](#{Package\Data Flow\Import CSV.Outputs[平面文件源输出].Columns[Age]}) == 0 || [FINDSTRING]([LOWER](#{Package\Data Flow\Import CSV.Outputs[平面文件源输出].Columns[Age]}),"null",1) != 0) ? NULL(DT_I4) : (DT_I4)#{Package\Data Flow\Import CSV.Outputs[平面文件源输出].Columns[Age]}</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="派生列友好表达式"
+                          expressionType="Notify"
+                          name="FriendlyExpression">(ISNULL(Age) || LEN(Age) == 0 || FINDSTRING(LOWER(Age),"null",1) != 0) ? NULL(DT_I4) : (DT_I4)Age</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Data Flow\Cast Data Types.Outputs[派生列输出].Columns[CastEmail]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="计算"
+                      errorRowDisposition="FailComponent"
+                      length="255"
+                      lineageId="Package\Data Flow\Cast Data Types.Outputs[派生列输出].Columns[CastEmail]"
+                      name="CastEmail"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="派生列表达式"
+                          name="Expression">([ISNULL](#{Package\Data Flow\Import CSV.Outputs[平面文件源输出].Columns[Email]}) || [LEN](#{Package\Data Flow\Import CSV.Outputs[平面文件源输出].Columns[Email]}) == 0 || [FINDSTRING]([LOWER](#{Package\Data Flow\Import CSV.Outputs[平面文件源输出].Columns[Email]}),"null",1) != 0) ? NULL(DT_WSTR,225) : #{Package\Data Flow\Import CSV.Outputs[平面文件源输出].Columns[Email]}</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="派生列友好表达式"
+                          expressionType="Notify"
+                          name="FriendlyExpression">(ISNULL(Email) || LEN(Email) == 0 || FINDSTRING(LOWER(Email),"null",1) != 0) ? NULL(DT_WSTR,225) : Email</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Data Flow\Cast Data Types.Outputs[派生列输出].Columns[CastRegistrationDate]"
+                      dataType="dbDate"
+                      errorOrTruncationOperation="计算"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Data Flow\Cast Data Types.Outputs[派生列输出].Columns[CastRegistrationDate]"
+                      name="CastRegistrationDate"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="派生列表达式"
+                          name="Expression">([ISNULL](#{Package\Data Flow\Import CSV.Outputs[平面文件源输出].Columns[RegistrationDate]}) || [LEN](#{Package\Data Flow\Import CSV.Outputs[平面文件源输出].Columns[RegistrationDate]}) == 0 || [FINDSTRING]([LOWER](#{Package\Data Flow\Import CSV.Outputs[平面文件源输出].Columns[RegistrationDate]}),"null",1) != 0) ? NULL(DT_DBDATE) : (DT_DBDATE)#{Package\Data Flow\Import CSV.Outputs[平面文件源输出].Columns[RegistrationDate]}</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="派生列友好表达式"
+                          expressionType="Notify"
+                          name="FriendlyExpression">(ISNULL(RegistrationDate) || LEN(RegistrationDate) == 0 || FINDSTRING(LOWER(RegistrationDate),"null",1) != 0) ? NULL(DT_DBDATE) : (DT_DBDATE)RegistrationDate</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Data Flow\Cast Data Types.Outputs[派生列输出].Columns[CastLastLoginDate]"
+                      dataType="dbDate"
+                      errorOrTruncationOperation="计算"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Data Flow\Cast Data Types.Outputs[派生列输出].Columns[CastLastLoginDate]"
+                      name="CastLastLoginDate"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="派生列表达式"
+                          name="Expression">([ISNULL](#{Package\Data Flow\Import CSV.Outputs[平面文件源输出].Columns[LastLoginDate]}) || [LEN](#{Package\Data Flow\Import CSV.Outputs[平面文件源输出].Columns[LastLoginDate]}) == 0 || [FINDSTRING]([LOWER](#{Package\Data Flow\Import CSV.Outputs[平面文件源输出].Columns[LastLoginDate]}),"null",1) != 0) ? NULL(DT_DBDATE) : (DT_DBDATE)#{Package\Data Flow\Import CSV.Outputs[平面文件源输出].Columns[LastLoginDate]}</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="派生列友好表达式"
+                          expressionType="Notify"
+                          name="FriendlyExpression">(ISNULL(LastLoginDate) || LEN(LastLoginDate) == 0 || FINDSTRING(LOWER(LastLoginDate),"null",1) != 0) ? NULL(DT_DBDATE) : (DT_DBDATE)LastLoginDate</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Data Flow\Cast Data Types.Outputs[派生列输出].Columns[CastPurchaseTotal]"
+                      dataType="r8"
+                      errorOrTruncationOperation="计算"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Data Flow\Cast Data Types.Outputs[派生列输出].Columns[CastPurchaseTotal]"
+                      name="CastPurchaseTotal"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="派生列表达式"
+                          name="Expression">([ISNULL](#{Package\Data Flow\Import CSV.Outputs[平面文件源输出].Columns[PurchaseTotal]}) || [LEN](#{Package\Data Flow\Import CSV.Outputs[平面文件源输出].Columns[PurchaseTotal]}) == 0 || [FINDSTRING]([LOWER](#{Package\Data Flow\Import CSV.Outputs[平面文件源输出].Columns[PurchaseTotal]}),"null",1) != 0) ? NULL(DT_R8) : (DT_R8)#{Package\Data Flow\Import CSV.Outputs[平面文件源输出].Columns[PurchaseTotal]}</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="派生列友好表达式"
+                          expressionType="Notify"
+                          name="FriendlyExpression">(ISNULL(PurchaseTotal) || LEN(PurchaseTotal) == 0 || FINDSTRING(LOWER(PurchaseTotal),"null",1) != 0) ? NULL(DT_R8) : (DT_R8)PurchaseTotal</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Data Flow\Cast Data Types.Outputs[派生列错误输出]"
+                  description="派生列转换的错误输出"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="派生列错误输出"
+                  synchronousInputId="Package\Data Flow\Cast Data Types.Inputs[派生列输入]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow\Cast Data Types.Outputs[派生列错误输出].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow\Cast Data Types.Outputs[派生列错误输出].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Data Flow\Cast Data Types.Outputs[派生列错误输出].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow\Cast Data Types.Outputs[派生列错误输出].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Data Flow\Import CSV"
+              componentClassID="Microsoft.FlatFileSource"
+              contactInfo="平面文件源;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; 保留所有权利; http://www.microsoft.com/sql/support;1"
+              description="平面文件源"
+              localeId="1033"
+              name="Import CSV"
+              usesDispositions="true"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Boolean"
+                  description="指定是否将长度为 0 的列视为 Null。"
+                  name="RetainNulls">true</property>
+                <property
+                  dataType="System.String"
+                  description="指定包含该文件名的输出列的名称。如果未指定名称，则不会生成包含该文件名的输出列。"
+                  name="FileNameColumnName"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Data Flow\Import CSV.Connections[FlatFileConnection]"
+                  connectionManagerID="Package.ConnectionManagers[Flat File Connection Manager]"
+                  connectionManagerRefId="Package.ConnectionManagers[Flat File Connection Manager]"
+                  name="FlatFileConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Data Flow\Import CSV.Outputs[平面文件源输出]"
+                  name="平面文件源输出">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow\Import CSV.Outputs[平面文件源输出].Columns[UserID]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="转换"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow\Import CSV.Outputs[平面文件源输出].ExternalColumns[UserID]"
+                      length="50"
+                      lineageId="Package\Data Flow\Import CSV.Outputs[平面文件源输出].Columns[UserID]"
+                      name="UserID"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.Boolean"
+                          description="指示该列是否使用更快、不分区域设置的分析例程。"
+                          name="FastParse">false</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="指示数据是否为二进制格式。"
+                          name="UseBinaryFormat">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Data Flow\Import CSV.Outputs[平面文件源输出].Columns[FullName]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="转换"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow\Import CSV.Outputs[平面文件源输出].ExternalColumns[FullName]"
+                      length="255"
+                      lineageId="Package\Data Flow\Import CSV.Outputs[平面文件源输出].Columns[FullName]"
+                      name="FullName"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.Boolean"
+                          description="指示该列是否使用更快、不分区域设置的分析例程。"
+                          name="FastParse">false</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="指示数据是否为二进制格式。"
+                          name="UseBinaryFormat">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Data Flow\Import CSV.Outputs[平面文件源输出].Columns[Age]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="转换"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow\Import CSV.Outputs[平面文件源输出].ExternalColumns[Age]"
+                      length="50"
+                      lineageId="Package\Data Flow\Import CSV.Outputs[平面文件源输出].Columns[Age]"
+                      name="Age"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.Boolean"
+                          description="指示该列是否使用更快、不分区域设置的分析例程。"
+                          name="FastParse">false</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="指示数据是否为二进制格式。"
+                          name="UseBinaryFormat">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Data Flow\Import CSV.Outputs[平面文件源输出].Columns[Email]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="转换"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow\Import CSV.Outputs[平面文件源输出].ExternalColumns[Email]"
+                      length="255"
+                      lineageId="Package\Data Flow\Import CSV.Outputs[平面文件源输出].Columns[Email]"
+                      name="Email"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.Boolean"
+                          description="指示该列是否使用更快、不分区域设置的分析例程。"
+                          name="FastParse">false</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="指示数据是否为二进制格式。"
+                          name="UseBinaryFormat">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Data Flow\Import CSV.Outputs[平面文件源输出].Columns[RegistrationDate]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="转换"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow\Import CSV.Outputs[平面文件源输出].ExternalColumns[RegistrationDate]"
+                      length="50"
+                      lineageId="Package\Data Flow\Import CSV.Outputs[平面文件源输出].Columns[RegistrationDate]"
+                      name="RegistrationDate"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.Boolean"
+                          description="指示该列是否使用更快、不分区域设置的分析例程。"
+                          name="FastParse">false</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="指示数据是否为二进制格式。"
+                          name="UseBinaryFormat">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Data Flow\Import CSV.Outputs[平面文件源输出].Columns[LastLoginDate]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="转换"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow\Import CSV.Outputs[平面文件源输出].ExternalColumns[LastLoginDate]"
+                      length="50"
+                      lineageId="Package\Data Flow\Import CSV.Outputs[平面文件源输出].Columns[LastLoginDate]"
+                      name="LastLoginDate"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.Boolean"
+                          description="指示该列是否使用更快、不分区域设置的分析例程。"
+                          name="FastParse">false</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="指示数据是否为二进制格式。"
+                          name="UseBinaryFormat">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Data Flow\Import CSV.Outputs[平面文件源输出].Columns[PurchaseTotal]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="转换"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow\Import CSV.Outputs[平面文件源输出].ExternalColumns[PurchaseTotal]"
+                      length="50"
+                      lineageId="Package\Data Flow\Import CSV.Outputs[平面文件源输出].Columns[PurchaseTotal]"
+                      name="PurchaseTotal"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.Boolean"
+                          description="指示该列是否使用更快、不分区域设置的分析例程。"
+                          name="FastParse">false</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="指示数据是否为二进制格式。"
+                          name="UseBinaryFormat">false</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Data Flow\Import CSV.Outputs[平面文件源输出].ExternalColumns[UserID]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="UserID" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow\Import CSV.Outputs[平面文件源输出].ExternalColumns[FullName]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="FullName" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow\Import CSV.Outputs[平面文件源输出].ExternalColumns[Age]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="Age" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow\Import CSV.Outputs[平面文件源输出].ExternalColumns[Email]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="Email" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow\Import CSV.Outputs[平面文件源输出].ExternalColumns[RegistrationDate]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="RegistrationDate" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow\Import CSV.Outputs[平面文件源输出].ExternalColumns[LastLoginDate]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="LastLoginDate" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow\Import CSV.Outputs[平面文件源输出].ExternalColumns[PurchaseTotal]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="PurchaseTotal" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Data Flow\Import CSV.Outputs[平面文件源错误输出]"
+                  isErrorOut="true"
+                  name="平面文件源错误输出">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow\Import CSV.Outputs[平面文件源错误输出].Columns[平面文件源错误输出列]"
+                      codePage="1252"
+                      dataType="text"
+                      description="平面文件源错误输出列"
+                      lineageId="Package\Data Flow\Import CSV.Outputs[平面文件源错误输出].Columns[平面文件源错误输出列]"
+                      name="平面文件源错误输出列" />
+                    <outputColumn
+                      refId="Package\Data Flow\Import CSV.Outputs[平面文件源错误输出].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow\Import CSV.Outputs[平面文件源错误输出].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Data Flow\Import CSV.Outputs[平面文件源错误输出].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow\Import CSV.Outputs[平面文件源错误输出].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Data Flow\Load Staging Table"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB 目标;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; 保留所有权利; http://www.microsoft.com/sql/support;4"
+              description="OLE DB 目标"
+              name="Load Staging Table"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="命令超时前等待的时间(秒)。值为 0，表示无限期等待。"
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="指定用于打开行集的数据库对象的名称。"
+                  name="OpenRowset">[stg].[Users]</property>
+                <property
+                  dataType="System.String"
+                  description="指定包含用于打开行集的数据库对象名的变量。"
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="要执行的 SQL 命令。"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="指定当数据源中没有代码页信息时使用的列代码页。"
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="描述字符数据时，强制使用 DefaultCodePage 属性值。"
+                  name="AlwaysUseDefaultCodePage">true</property>
+                <property
+                  dataType="System.Int32"
+                  description="指定用于访问数据库的模式。"
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="指示是否将为标识列提供的值复制到目标。如果设置为 False，则将在目标中为标识列自动生成值。仅当启用了快速加载时适用。"
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="指示对于包含 Null 值的列是否将 Null 值插入目标中。如果为 False，则对于包含 Null 值的列会将其默认值插入目标中。仅当启用了快速加载时适用。"
+                  name="FastLoadKeepNulls">true</property>
+                <property
+                  dataType="System.String"
+                  description="指定将用于快速加载的选项。仅当启用了快速加载时适用。"
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="指定在插入数据期间何时发出提交命令。如果值为 0，则指定在数据插入结束时发出一个提交命令。仅当启用了快速加载时适用。"
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Data Flow\Load Staging Table.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[DESKTOP-UO8UD6K.KoreAssignment_Yuheng_Miao]"
+                  connectionManagerRefId="Package.ConnectionManagers[DESKTOP-UO8UD6K.KoreAssignment_Yuheng_Miao]"
+                  description="指定用于访问数据库的 OLE DB 运行时连接。"
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Data Flow\Load Staging Table.Inputs[OLE DB 目标输入]"
+                  errorOrTruncationOperation="插入"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB 目标输入">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Data Flow\Load Staging Table.Inputs[OLE DB 目标输入].Columns[CastUserID]"
+                      cachedDataType="i4"
+                      cachedName="CastUserID"
+                      externalMetadataColumnId="Package\Data Flow\Load Staging Table.Inputs[OLE DB 目标输入].ExternalColumns[UserID]"
+                      lineageId="Package\Data Flow\Cast Data Types.Outputs[派生列输出].Columns[CastUserID]" />
+                    <inputColumn
+                      refId="Package\Data Flow\Load Staging Table.Inputs[OLE DB 目标输入].Columns[CastFullName]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="CastFullName"
+                      externalMetadataColumnId="Package\Data Flow\Load Staging Table.Inputs[OLE DB 目标输入].ExternalColumns[FullName]"
+                      lineageId="Package\Data Flow\Cast Data Types.Outputs[派生列输出].Columns[CastFullName]" />
+                    <inputColumn
+                      refId="Package\Data Flow\Load Staging Table.Inputs[OLE DB 目标输入].Columns[CastAge]"
+                      cachedDataType="i4"
+                      cachedName="CastAge"
+                      externalMetadataColumnId="Package\Data Flow\Load Staging Table.Inputs[OLE DB 目标输入].ExternalColumns[Age]"
+                      lineageId="Package\Data Flow\Cast Data Types.Outputs[派生列输出].Columns[CastAge]" />
+                    <inputColumn
+                      refId="Package\Data Flow\Load Staging Table.Inputs[OLE DB 目标输入].Columns[CastEmail]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="CastEmail"
+                      externalMetadataColumnId="Package\Data Flow\Load Staging Table.Inputs[OLE DB 目标输入].ExternalColumns[Email]"
+                      lineageId="Package\Data Flow\Cast Data Types.Outputs[派生列输出].Columns[CastEmail]" />
+                    <inputColumn
+                      refId="Package\Data Flow\Load Staging Table.Inputs[OLE DB 目标输入].Columns[CastRegistrationDate]"
+                      cachedDataType="dbDate"
+                      cachedName="CastRegistrationDate"
+                      externalMetadataColumnId="Package\Data Flow\Load Staging Table.Inputs[OLE DB 目标输入].ExternalColumns[RegistrationDate]"
+                      lineageId="Package\Data Flow\Cast Data Types.Outputs[派生列输出].Columns[CastRegistrationDate]" />
+                    <inputColumn
+                      refId="Package\Data Flow\Load Staging Table.Inputs[OLE DB 目标输入].Columns[CastLastLoginDate]"
+                      cachedDataType="dbDate"
+                      cachedName="CastLastLoginDate"
+                      externalMetadataColumnId="Package\Data Flow\Load Staging Table.Inputs[OLE DB 目标输入].ExternalColumns[LastLoginDate]"
+                      lineageId="Package\Data Flow\Cast Data Types.Outputs[派生列输出].Columns[CastLastLoginDate]" />
+                    <inputColumn
+                      refId="Package\Data Flow\Load Staging Table.Inputs[OLE DB 目标输入].Columns[CastPurchaseTotal]"
+                      cachedDataType="r8"
+                      cachedName="CastPurchaseTotal"
+                      externalMetadataColumnId="Package\Data Flow\Load Staging Table.Inputs[OLE DB 目标输入].ExternalColumns[PurchaseTotal]"
+                      lineageId="Package\Data Flow\Cast Data Types.Outputs[派生列输出].Columns[CastPurchaseTotal]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Data Flow\Load Staging Table.Inputs[OLE DB 目标输入].ExternalColumns[UserID]"
+                      dataType="i4"
+                      name="UserID" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow\Load Staging Table.Inputs[OLE DB 目标输入].ExternalColumns[FullName]"
+                      dataType="wstr"
+                      length="255"
+                      name="FullName" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow\Load Staging Table.Inputs[OLE DB 目标输入].ExternalColumns[Age]"
+                      dataType="i4"
+                      name="Age" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow\Load Staging Table.Inputs[OLE DB 目标输入].ExternalColumns[Email]"
+                      dataType="wstr"
+                      length="255"
+                      name="Email" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow\Load Staging Table.Inputs[OLE DB 目标输入].ExternalColumns[RegistrationDate]"
+                      dataType="dbDate"
+                      name="RegistrationDate" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow\Load Staging Table.Inputs[OLE DB 目标输入].ExternalColumns[LastLoginDate]"
+                      dataType="dbDate"
+                      name="LastLoginDate" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow\Load Staging Table.Inputs[OLE DB 目标输入].ExternalColumns[PurchaseTotal]"
+                      dataType="r8"
+                      name="PurchaseTotal" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow\Load Staging Table.Inputs[OLE DB 目标输入].ExternalColumns[StgID]"
+                      dataType="i4"
+                      name="StgID" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Data Flow\Load Staging Table.Outputs[OLE DB 目标错误输出]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB 目标错误输出"
+                  synchronousInputId="Package\Data Flow\Load Staging Table.Inputs[OLE DB 目标输入]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow\Load Staging Table.Outputs[OLE DB 目标错误输出].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow\Load Staging Table.Outputs[OLE DB 目标错误输出].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Data Flow\Load Staging Table.Outputs[OLE DB 目标错误输出].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow\Load Staging Table.Outputs[OLE DB 目标错误输出].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Data Flow\Remove Double Quotes, Trim"
+              componentClassID="Microsoft.DerivedColumn"
+              contactInfo="派生列;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; 保留所有权利; http://www.microsoft.com/sql/support;0"
+              description="通过对转换输入列应用表达式来创建新的列值。创建新列或覆盖现有列。例如，将 &quot;first name&quot; 列和 &quot;last name&quot; 列中的值连接在一起以创建一个 &quot;full name&quot; 列。"
+              name="Remove Double Quotes, Trim"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Data Flow\Remove Double Quotes, Trim.Inputs[派生列输入]"
+                  description="派生列转换的输入"
+                  name="派生列输入">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Data Flow\Remove Double Quotes, Trim.Inputs[派生列输入].Columns[UserID]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="UserID"
+                      errorOrTruncationOperation="计算"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Data Flow\Import CSV.Outputs[平面文件源输出].Columns[UserID]"
+                      truncationRowDisposition="FailComponent"
+                      usageType="readWrite">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="派生列表达式"
+                          name="Expression">[TRIM]([REPLACE](#{Package\Data Flow\Import CSV.Outputs[平面文件源输出].Columns[UserID]},"\"",""))</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="派生列友好表达式"
+                          expressionType="Notify"
+                          name="FriendlyExpression">TRIM(REPLACE(UserID,"\"",""))</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Data Flow\Remove Double Quotes, Trim.Inputs[派生列输入].Columns[FullName]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="FullName"
+                      errorOrTruncationOperation="计算"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Data Flow\Import CSV.Outputs[平面文件源输出].Columns[FullName]"
+                      truncationRowDisposition="FailComponent"
+                      usageType="readWrite">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="派生列表达式"
+                          name="Expression">[TRIM]([REPLACE](#{Package\Data Flow\Import CSV.Outputs[平面文件源输出].Columns[FullName]},"\"",""))</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="派生列友好表达式"
+                          expressionType="Notify"
+                          name="FriendlyExpression">TRIM(REPLACE(FullName,"\"",""))</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Data Flow\Remove Double Quotes, Trim.Inputs[派生列输入].Columns[Age]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="Age"
+                      errorOrTruncationOperation="计算"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Data Flow\Import CSV.Outputs[平面文件源输出].Columns[Age]"
+                      truncationRowDisposition="FailComponent"
+                      usageType="readWrite">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="派生列表达式"
+                          name="Expression">[TRIM]([REPLACE](#{Package\Data Flow\Import CSV.Outputs[平面文件源输出].Columns[Age]},"\"",""))</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="派生列友好表达式"
+                          expressionType="Notify"
+                          name="FriendlyExpression">TRIM(REPLACE(Age,"\"",""))</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Data Flow\Remove Double Quotes, Trim.Inputs[派生列输入].Columns[Email]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="Email"
+                      errorOrTruncationOperation="计算"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Data Flow\Import CSV.Outputs[平面文件源输出].Columns[Email]"
+                      truncationRowDisposition="FailComponent"
+                      usageType="readWrite">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="派生列表达式"
+                          name="Expression">[TRIM]([REPLACE](#{Package\Data Flow\Import CSV.Outputs[平面文件源输出].Columns[Email]},"\"",""))</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="派生列友好表达式"
+                          expressionType="Notify"
+                          name="FriendlyExpression">TRIM(REPLACE(Email,"\"",""))</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Data Flow\Remove Double Quotes, Trim.Inputs[派生列输入].Columns[RegistrationDate]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="RegistrationDate"
+                      errorOrTruncationOperation="计算"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Data Flow\Import CSV.Outputs[平面文件源输出].Columns[RegistrationDate]"
+                      truncationRowDisposition="FailComponent"
+                      usageType="readWrite">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="派生列表达式"
+                          name="Expression">[TRIM]([REPLACE](#{Package\Data Flow\Import CSV.Outputs[平面文件源输出].Columns[RegistrationDate]},"\"",""))</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="派生列友好表达式"
+                          expressionType="Notify"
+                          name="FriendlyExpression">TRIM(REPLACE(RegistrationDate,"\"",""))</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Data Flow\Remove Double Quotes, Trim.Inputs[派生列输入].Columns[LastLoginDate]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="LastLoginDate"
+                      errorOrTruncationOperation="计算"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Data Flow\Import CSV.Outputs[平面文件源输出].Columns[LastLoginDate]"
+                      truncationRowDisposition="FailComponent"
+                      usageType="readWrite">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="派生列表达式"
+                          name="Expression">[TRIM]([REPLACE](#{Package\Data Flow\Import CSV.Outputs[平面文件源输出].Columns[LastLoginDate]},"\"",""))</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="派生列友好表达式"
+                          expressionType="Notify"
+                          name="FriendlyExpression">TRIM(REPLACE(LastLoginDate,"\"",""))</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Data Flow\Remove Double Quotes, Trim.Inputs[派生列输入].Columns[PurchaseTotal]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="PurchaseTotal"
+                      errorOrTruncationOperation="计算"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Data Flow\Import CSV.Outputs[平面文件源输出].Columns[PurchaseTotal]"
+                      truncationRowDisposition="FailComponent"
+                      usageType="readWrite">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="派生列表达式"
+                          name="Expression">[TRIM]([REPLACE](#{Package\Data Flow\Import CSV.Outputs[平面文件源输出].Columns[PurchaseTotal]},"\"",""))</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="派生列友好表达式"
+                          expressionType="Notify"
+                          name="FriendlyExpression">TRIM(REPLACE(PurchaseTotal,"\"",""))</property>
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Data Flow\Remove Double Quotes, Trim.Outputs[派生列输出]"
+                  description="派生列转换的默认输出"
+                  exclusionGroup="1"
+                  name="派生列输出"
+                  synchronousInputId="Package\Data Flow\Remove Double Quotes, Trim.Inputs[派生列输入]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Data Flow\Remove Double Quotes, Trim.Outputs[派生列错误输出]"
+                  description="派生列转换的错误输出"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="派生列错误输出"
+                  synchronousInputId="Package\Data Flow\Remove Double Quotes, Trim.Inputs[派生列输入]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow\Remove Double Quotes, Trim.Outputs[派生列错误输出].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow\Remove Double Quotes, Trim.Outputs[派生列错误输出].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Data Flow\Remove Double Quotes, Trim.Outputs[派生列错误输出].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow\Remove Double Quotes, Trim.Outputs[派生列错误输出].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Data Flow.Paths[平面文件源输出]"
+              endId="Package\Data Flow\Remove Double Quotes, Trim.Inputs[派生列输入]"
+              name="平面文件源输出"
+              startId="Package\Data Flow\Import CSV.Outputs[平面文件源输出]" />
+            <path
+              refId="Package\Data Flow.Paths[派生列输出]"
+              endId="Package\Data Flow\Load Staging Table.Inputs[OLE DB 目标输入]"
+              name="派生列输出"
+              startId="Package\Data Flow\Cast Data Types.Outputs[派生列输出]" />
+            <path
+              refId="Package\Data Flow.Paths[派生列输出1]"
+              endId="Package\Data Flow\Cast Data Types.Inputs[派生列输入]"
+              name="派生列输出"
+              startId="Package\Data Flow\Remove Double Quotes, Trim.Outputs[派生列输出]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="132,41.6"
+          Id="Package\Data Flow"
+          TopLeft="163.74999511987,111.222217618499" />
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Data Flow">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="138.4,41.6"
+          Id="Package\Data Flow\Import CSV"
+          TopLeft="119.999996423721,23.1111101544934" />
+        <NodeLayout
+          Size="234.4,41.6"
+          Id="Package\Data Flow\Remove Double Quotes, Trim"
+          TopLeft="78.7499976530671,114.833328580139" />
+        <EdgeLayout
+          Id="Package\Data Flow.Paths[平面文件源输出]"
+          TopLeft="192.574997038394,64.7111101544934">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,50.1222184256457"
+              Start="0,0"
+              End="0,42.6222184256457">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,42.6222184256457" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="186.4,41.6"
+          Id="Package\Data Flow\Load Staging Table"
+          TopLeft="102.499996945262,306.944431739365" />
+        <NodeLayout
+          Size="168.8,41.6"
+          Id="Package\Data Flow\Cast Data Types"
+          TopLeft="108.749996758997,202.611102890177" />
+        <EdgeLayout
+          Id="Package\Data Flow.Paths[派生列输出]"
+          TopLeft="194.42499685213,244.211102890177">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,62.7333288491878"
+              Start="0,0"
+              End="0,55.2333288491878">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,55.2333288491878" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Data Flow.Paths[派生列输出1]"
+          TopLeft="194.549997206032,156.433328580139">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,46.1777743100384"
+              Start="0,0"
+              End="0,38.6777743100384">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,38.6777743100384" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Data Flow\Load Staging Table">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
 </DTS:Executable>
