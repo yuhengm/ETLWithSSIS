@@ -11,11 +11,21 @@
   DTS:LocaleID="1033"
   DTS:ObjectName="Package"
   DTS:PackageType="5"
-  DTS:VersionBuild="61"
-  DTS:VersionGUID="{9F2076F3-0806-42A5-8C01-7B3AA0EB5883}">
+  DTS:VersionBuild="75"
+  DTS:VersionGUID="{7FD265E8-979D-4EBD-A191-AE4F92CB77CB}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[DeduplicateStaging.sql]"
+      DTS:CreationName="FILE"
+      DTS:DTSID="{95C7FFDF-F11B-4A2B-BDE2-D8DEA549A53D}"
+      DTS:ObjectName="DeduplicateStaging.sql">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="C:\Users\RAE\YM\ETLWithSSIS\Scripts\DeduplicateStaging.sql" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
     <DTS:ConnectionManager
       DTS:refId="Package.ConnectionManagers[DESKTOP-UO8UD6K.KoreAssignment_Yuheng_Miao]"
       DTS:CreationName="OLEDB"
@@ -111,9 +121,47 @@
         </DTS:ConnectionManager>
       </DTS:ObjectData>
     </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[RemoveInvalidStaging.sql]"
+      DTS:CreationName="FILE"
+      DTS:DTSID="{BDC80919-9B41-4780-AC67-6523ACFAB372}"
+      DTS:ObjectName="RemoveInvalidStaging.sql">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="C:\Users\RAE\YM\ETLWithSSIS\Scripts\RemoveInvalidStaging.sql" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[StartQuery.sql]"
+      DTS:CreationName="FILE"
+      DTS:DTSID="{A7755053-8E51-402B-A34B-8C07622F8345}"
+      DTS:ObjectName="StartQuery.sql">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="C:\Users\RAE\YM\ETLWithSSIS\Scripts\StartQuery.sql" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
   </DTS:ConnectionManagers>
   <DTS:Variables />
   <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Create Schema and Table"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task to create schema and table required for following tasks"
+      DTS:DTSID="{BA72F570-4A10-4DA5-A287-CFD020C2162D}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Create Schema and Table"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{61F04048-F653-4A7A-92F1-63EF4BB99814}"
+          SQLTask:SqlStmtSourceType="FileConnection"
+          SQLTask:SqlStatementSource="StartQuery.sql" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
     <DTS:Executable
       DTS:refId="Package\Data Flow"
       DTS:CreationName="Microsoft.Pipeline"
@@ -649,7 +697,7 @@
                 <property
                   dataType="System.String"
                   description="指定用于打开行集的数据库对象的名称。"
-                  name="OpenRowset">[stg].[Users]</property>
+                  name="OpenRowset">[dbo].[Testing Table]</property>
                 <property
                   dataType="System.String"
                   description="指定包含用于打开行集的数据库对象名的变量。"
@@ -782,10 +830,6 @@
                       refId="Package\Data Flow\Load Staging Table.Inputs[OLE DB 目标输入].ExternalColumns[PurchaseTotal]"
                       dataType="r8"
                       name="PurchaseTotal" />
-                    <externalMetadataColumn
-                      refId="Package\Data Flow\Load Staging Table.Inputs[OLE DB 目标输入].ExternalColumns[StgID]"
-                      dataType="i4"
-                      name="StgID" />
                   </externalMetadataColumns>
                 </input>
               </inputs>
@@ -1054,7 +1098,69 @@
         </pipeline>
       </DTS:ObjectData>
     </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Deduplicate Staging Table"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{D2ECFE6D-23F3-4C8F-A485-13AE0A7E3017}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Deduplicate Staging Table"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{61F04048-F653-4A7A-92F1-63EF4BB99814}"
+          SQLTask:SqlStmtSourceType="FileConnection"
+          SQLTask:SqlStatementSource="DeduplicateStaging.sql" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Move Invalid Records to Error Table"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{E0E2A0A6-A22C-4DAD-B7D4-F1314EDF5FF3}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Move Invalid Records to Error Table"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{61F04048-F653-4A7A-92F1-63EF4BB99814}"
+          SQLTask:SqlStmtSourceType="FileConnection"
+          SQLTask:SqlStatementSource="RemoveInvalidStaging.sql" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
   </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{59A096EA-8CC7-4E94-94C8-AB1FFBD1F162}"
+      DTS:From="Package\Data Flow"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Deduplicate Staging Table" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{534084E6-37BB-4BEC-8A72-3500AAFAFF72}"
+      DTS:From="Package\Create Schema and Table"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\Data Flow" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{E925EB30-396F-44D4-954E-91555EADD105}"
+      DTS:From="Package\Deduplicate Staging Table"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
+      DTS:To="Package\Move Invalid Records to Error Table" />
+  </DTS:PrecedenceConstraints>
   <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
 <!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
 <!--If you manually edit this section and make a mistake, you can delete it. -->
@@ -1066,11 +1172,89 @@
     design-time-name="Package">
     <LayoutInfo>
       <GraphLayout
-        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
           Size="132,41.6"
           Id="Package\Data Flow"
           TopLeft="163.74999511987,111.222217618499" />
+        <NodeLayout
+          Size="228,41.6"
+          Id="Package\Deduplicate Staging Table"
+          TopLeft="121.249996386469,201.499991659489" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="232.499995753169,152.822217618499">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,48.6777740409901"
+              Start="0,0"
+              End="0,41.1777740409901">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,41.1777740409901" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="186.4,41.6"
+          Id="Package\Create Schema and Table"
+          TopLeft="136.874995920807,36.1111096163959" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="229.912495520339,77.7111096163959">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,33.5111080021031"
+              Start="0,0"
+              End="0,26.0111080021031">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,26.0111080021031" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="288.8,41.6"
+          Id="Package\Move Invalid Records to Error Table"
+          TopLeft="95.624997150153,304.055542970054" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="237.637496768311,243.099991659489">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,60.9555513105644"
+              Start="0,0"
+              End="0,53.4555513105644">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,53.4555513105644" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
       </GraphLayout>
     </LayoutInfo>
   </Package>
@@ -1079,6 +1263,14 @@
     <LayoutInfo>
       <GraphLayout
         Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="186.4,41.6"
+          Id="Package\Data Flow\Load Staging Table"
+          TopLeft="102.499996945262,306.944431739365" />
+        <NodeLayout
+          Size="168.8,41.6"
+          Id="Package\Data Flow\Cast Data Types"
+          TopLeft="108.749996758997,202.611102890177" />
         <NodeLayout
           Size="138.4,41.6"
           Id="Package\Data Flow\Import CSV"
@@ -1109,36 +1301,6 @@
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <NodeLayout
-          Size="186.4,41.6"
-          Id="Package\Data Flow\Load Staging Table"
-          TopLeft="102.499996945262,306.944431739365" />
-        <NodeLayout
-          Size="168.8,41.6"
-          Id="Package\Data Flow\Cast Data Types"
-          TopLeft="108.749996758997,202.611102890177" />
-        <EdgeLayout
-          Id="Package\Data Flow.Paths[派生列输出]"
-          TopLeft="194.42499685213,244.211102890177">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,62.7333288491878"
-              Start="0,0"
-              End="0,55.2333288491878">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,55.2333288491878" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
         <EdgeLayout
           Id="Package\Data Flow.Paths[派生列输出1]"
           TopLeft="194.549997206032,156.433328580139">
@@ -1153,6 +1315,28 @@
                   Capacity="5">
                   <mssgle:LineSegment
                     End="0,38.6777743100384" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Data Flow.Paths[派生列输出]"
+          TopLeft="194.42499685213,244.211102890177">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,62.7333288491878"
+              Start="0,0"
+              End="0,55.2333288491878">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,55.2333288491878" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
