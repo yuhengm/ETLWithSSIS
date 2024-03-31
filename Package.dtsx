@@ -11,8 +11,8 @@
   DTS:LocaleID="1033"
   DTS:ObjectName="Package"
   DTS:PackageType="5"
-  DTS:VersionBuild="75"
-  DTS:VersionGUID="{7FD265E8-979D-4EBD-A191-AE4F92CB77CB}">
+  DTS:VersionBuild="81"
+  DTS:VersionGUID="{1899AA6A-C1EF-488A-BC20-D183C664DCC8}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -247,10 +247,10 @@
                       refId="Package\Data Flow\Cast Data Types.Outputs[派生列输出].Columns[CastUserID]"
                       dataType="i4"
                       errorOrTruncationOperation="计算"
-                      errorRowDisposition="FailComponent"
+                      errorRowDisposition="RedirectRow"
                       lineageId="Package\Data Flow\Cast Data Types.Outputs[派生列输出].Columns[CastUserID]"
                       name="CastUserID"
-                      truncationRowDisposition="FailComponent">
+                      truncationRowDisposition="RedirectRow">
                       <properties>
                         <property
                           containsID="true"
@@ -269,11 +269,11 @@
                       refId="Package\Data Flow\Cast Data Types.Outputs[派生列输出].Columns[CastFullName]"
                       dataType="wstr"
                       errorOrTruncationOperation="计算"
-                      errorRowDisposition="FailComponent"
+                      errorRowDisposition="RedirectRow"
                       length="255"
                       lineageId="Package\Data Flow\Cast Data Types.Outputs[派生列输出].Columns[CastFullName]"
                       name="CastFullName"
-                      truncationRowDisposition="FailComponent">
+                      truncationRowDisposition="RedirectRow">
                       <properties>
                         <property
                           containsID="true"
@@ -292,10 +292,10 @@
                       refId="Package\Data Flow\Cast Data Types.Outputs[派生列输出].Columns[CastAge]"
                       dataType="i4"
                       errorOrTruncationOperation="计算"
-                      errorRowDisposition="FailComponent"
+                      errorRowDisposition="RedirectRow"
                       lineageId="Package\Data Flow\Cast Data Types.Outputs[派生列输出].Columns[CastAge]"
                       name="CastAge"
-                      truncationRowDisposition="FailComponent">
+                      truncationRowDisposition="RedirectRow">
                       <properties>
                         <property
                           containsID="true"
@@ -314,11 +314,11 @@
                       refId="Package\Data Flow\Cast Data Types.Outputs[派生列输出].Columns[CastEmail]"
                       dataType="wstr"
                       errorOrTruncationOperation="计算"
-                      errorRowDisposition="FailComponent"
+                      errorRowDisposition="RedirectRow"
                       length="255"
                       lineageId="Package\Data Flow\Cast Data Types.Outputs[派生列输出].Columns[CastEmail]"
                       name="CastEmail"
-                      truncationRowDisposition="FailComponent">
+                      truncationRowDisposition="RedirectRow">
                       <properties>
                         <property
                           containsID="true"
@@ -337,10 +337,10 @@
                       refId="Package\Data Flow\Cast Data Types.Outputs[派生列输出].Columns[CastRegistrationDate]"
                       dataType="dbDate"
                       errorOrTruncationOperation="计算"
-                      errorRowDisposition="FailComponent"
+                      errorRowDisposition="RedirectRow"
                       lineageId="Package\Data Flow\Cast Data Types.Outputs[派生列输出].Columns[CastRegistrationDate]"
                       name="CastRegistrationDate"
-                      truncationRowDisposition="FailComponent">
+                      truncationRowDisposition="RedirectRow">
                       <properties>
                         <property
                           containsID="true"
@@ -359,10 +359,10 @@
                       refId="Package\Data Flow\Cast Data Types.Outputs[派生列输出].Columns[CastLastLoginDate]"
                       dataType="dbDate"
                       errorOrTruncationOperation="计算"
-                      errorRowDisposition="FailComponent"
+                      errorRowDisposition="RedirectRow"
                       lineageId="Package\Data Flow\Cast Data Types.Outputs[派生列输出].Columns[CastLastLoginDate]"
                       name="CastLastLoginDate"
-                      truncationRowDisposition="FailComponent">
+                      truncationRowDisposition="RedirectRow">
                       <properties>
                         <property
                           containsID="true"
@@ -381,10 +381,10 @@
                       refId="Package\Data Flow\Cast Data Types.Outputs[派生列输出].Columns[CastPurchaseTotal]"
                       dataType="r8"
                       errorOrTruncationOperation="计算"
-                      errorRowDisposition="FailComponent"
+                      errorRowDisposition="RedirectRow"
                       lineageId="Package\Data Flow\Cast Data Types.Outputs[派生列输出].Columns[CastPurchaseTotal]"
                       name="CastPurchaseTotal"
-                      truncationRowDisposition="FailComponent">
+                      truncationRowDisposition="RedirectRow">
                       <properties>
                         <property
                           containsID="true"
@@ -697,7 +697,7 @@
                 <property
                   dataType="System.String"
                   description="指定用于打开行集的数据库对象的名称。"
-                  name="OpenRowset">[dbo].[Testing Table]</property>
+                  name="OpenRowset">[stg].[Users]</property>
                 <property
                   dataType="System.String"
                   description="指定包含用于打开行集的数据库对象名的变量。"
@@ -830,6 +830,10 @@
                       refId="Package\Data Flow\Load Staging Table.Inputs[OLE DB 目标输入].ExternalColumns[PurchaseTotal]"
                       dataType="r8"
                       name="PurchaseTotal" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow\Load Staging Table.Inputs[OLE DB 目标输入].ExternalColumns[StgID]"
+                      dataType="i4"
+                      name="StgID" />
                   </externalMetadataColumns>
                 </input>
               </inputs>
@@ -851,6 +855,213 @@
                       refId="Package\Data Flow\Load Staging Table.Outputs[OLE DB 目标错误输出].Columns[ErrorColumn]"
                       dataType="i4"
                       lineageId="Package\Data Flow\Load Staging Table.Outputs[OLE DB 目标错误输出].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Data Flow\Log Data Failed Casting"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB 目标;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; 保留所有权利; http://www.microsoft.com/sql/support;4"
+              description="OLE DB 目标"
+              name="Log Data Failed Casting"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="命令超时前等待的时间(秒)。值为 0，表示无限期等待。"
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="指定用于打开行集的数据库对象的名称。"
+                  name="OpenRowset">[FailedCasting]</property>
+                <property
+                  dataType="System.String"
+                  description="指定包含用于打开行集的数据库对象名的变量。"
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="要执行的 SQL 命令。"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="指定当数据源中没有代码页信息时使用的列代码页。"
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="描述字符数据时，强制使用 DefaultCodePage 属性值。"
+                  name="AlwaysUseDefaultCodePage">true</property>
+                <property
+                  dataType="System.Int32"
+                  description="指定用于访问数据库的模式。"
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="指示是否将为标识列提供的值复制到目标。如果设置为 False，则将在目标中为标识列自动生成值。仅当启用了快速加载时适用。"
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="指示对于包含 Null 值的列是否将 Null 值插入目标中。如果为 False，则对于包含 Null 值的列会将其默认值插入目标中。仅当启用了快速加载时适用。"
+                  name="FastLoadKeepNulls">true</property>
+                <property
+                  dataType="System.String"
+                  description="指定将用于快速加载的选项。仅当启用了快速加载时适用。"
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="指定在插入数据期间何时发出提交命令。如果值为 0，则指定在数据插入结束时发出一个提交命令。仅当启用了快速加载时适用。"
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Data Flow\Log Data Failed Casting.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[DESKTOP-UO8UD6K.KoreAssignment_Yuheng_Miao]"
+                  connectionManagerRefId="Package.ConnectionManagers[DESKTOP-UO8UD6K.KoreAssignment_Yuheng_Miao]"
+                  description="指定用于访问数据库的 OLE DB 运行时连接。"
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Data Flow\Log Data Failed Casting.Inputs[OLE DB 目标输入]"
+                  errorOrTruncationOperation="插入"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB 目标输入">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Data Flow\Log Data Failed Casting.Inputs[OLE DB 目标输入].Columns[UserID]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="UserID"
+                      externalMetadataColumnId="Package\Data Flow\Log Data Failed Casting.Inputs[OLE DB 目标输入].ExternalColumns[UserID]"
+                      lineageId="Package\Data Flow\Import CSV.Outputs[平面文件源输出].Columns[UserID]" />
+                    <inputColumn
+                      refId="Package\Data Flow\Log Data Failed Casting.Inputs[OLE DB 目标输入].Columns[FullName]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="FullName"
+                      externalMetadataColumnId="Package\Data Flow\Log Data Failed Casting.Inputs[OLE DB 目标输入].ExternalColumns[FullName]"
+                      lineageId="Package\Data Flow\Import CSV.Outputs[平面文件源输出].Columns[FullName]" />
+                    <inputColumn
+                      refId="Package\Data Flow\Log Data Failed Casting.Inputs[OLE DB 目标输入].Columns[Age]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="Age"
+                      externalMetadataColumnId="Package\Data Flow\Log Data Failed Casting.Inputs[OLE DB 目标输入].ExternalColumns[Age]"
+                      lineageId="Package\Data Flow\Import CSV.Outputs[平面文件源输出].Columns[Age]" />
+                    <inputColumn
+                      refId="Package\Data Flow\Log Data Failed Casting.Inputs[OLE DB 目标输入].Columns[Email]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="Email"
+                      externalMetadataColumnId="Package\Data Flow\Log Data Failed Casting.Inputs[OLE DB 目标输入].ExternalColumns[Email]"
+                      lineageId="Package\Data Flow\Import CSV.Outputs[平面文件源输出].Columns[Email]" />
+                    <inputColumn
+                      refId="Package\Data Flow\Log Data Failed Casting.Inputs[OLE DB 目标输入].Columns[RegistrationDate]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="RegistrationDate"
+                      externalMetadataColumnId="Package\Data Flow\Log Data Failed Casting.Inputs[OLE DB 目标输入].ExternalColumns[RegistrationDate]"
+                      lineageId="Package\Data Flow\Import CSV.Outputs[平面文件源输出].Columns[RegistrationDate]" />
+                    <inputColumn
+                      refId="Package\Data Flow\Log Data Failed Casting.Inputs[OLE DB 目标输入].Columns[LastLoginDate]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="LastLoginDate"
+                      externalMetadataColumnId="Package\Data Flow\Log Data Failed Casting.Inputs[OLE DB 目标输入].ExternalColumns[LastLoginDate]"
+                      lineageId="Package\Data Flow\Import CSV.Outputs[平面文件源输出].Columns[LastLoginDate]" />
+                    <inputColumn
+                      refId="Package\Data Flow\Log Data Failed Casting.Inputs[OLE DB 目标输入].Columns[PurchaseTotal]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="PurchaseTotal"
+                      externalMetadataColumnId="Package\Data Flow\Log Data Failed Casting.Inputs[OLE DB 目标输入].ExternalColumns[PurchaseTotal]"
+                      lineageId="Package\Data Flow\Import CSV.Outputs[平面文件源输出].Columns[PurchaseTotal]" />
+                    <inputColumn
+                      refId="Package\Data Flow\Log Data Failed Casting.Inputs[OLE DB 目标输入].Columns[ErrorCode]"
+                      cachedDataType="i4"
+                      cachedName="ErrorCode"
+                      externalMetadataColumnId="Package\Data Flow\Log Data Failed Casting.Inputs[OLE DB 目标输入].ExternalColumns[ErrorCode]"
+                      lineageId="Package\Data Flow\Cast Data Types.Outputs[派生列错误输出].Columns[ErrorCode]" />
+                    <inputColumn
+                      refId="Package\Data Flow\Log Data Failed Casting.Inputs[OLE DB 目标输入].Columns[ErrorColumn]"
+                      cachedDataType="i4"
+                      cachedName="ErrorColumn"
+                      externalMetadataColumnId="Package\Data Flow\Log Data Failed Casting.Inputs[OLE DB 目标输入].ExternalColumns[ErrorColumn]"
+                      lineageId="Package\Data Flow\Cast Data Types.Outputs[派生列错误输出].Columns[ErrorColumn]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Data Flow\Log Data Failed Casting.Inputs[OLE DB 目标输入].ExternalColumns[UserID]"
+                      dataType="wstr"
+                      length="50"
+                      name="UserID" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow\Log Data Failed Casting.Inputs[OLE DB 目标输入].ExternalColumns[FullName]"
+                      dataType="wstr"
+                      length="255"
+                      name="FullName" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow\Log Data Failed Casting.Inputs[OLE DB 目标输入].ExternalColumns[Age]"
+                      dataType="wstr"
+                      length="50"
+                      name="Age" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow\Log Data Failed Casting.Inputs[OLE DB 目标输入].ExternalColumns[Email]"
+                      dataType="wstr"
+                      length="255"
+                      name="Email" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow\Log Data Failed Casting.Inputs[OLE DB 目标输入].ExternalColumns[RegistrationDate]"
+                      dataType="wstr"
+                      length="50"
+                      name="RegistrationDate" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow\Log Data Failed Casting.Inputs[OLE DB 目标输入].ExternalColumns[LastLoginDate]"
+                      dataType="wstr"
+                      length="50"
+                      name="LastLoginDate" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow\Log Data Failed Casting.Inputs[OLE DB 目标输入].ExternalColumns[PurchaseTotal]"
+                      dataType="wstr"
+                      length="50"
+                      name="PurchaseTotal" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow\Log Data Failed Casting.Inputs[OLE DB 目标输入].ExternalColumns[ErrorCode]"
+                      dataType="i4"
+                      name="ErrorCode" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow\Log Data Failed Casting.Inputs[OLE DB 目标输入].ExternalColumns[ErrorColumn]"
+                      dataType="i4"
+                      name="ErrorColumn" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Data Flow\Log Data Failed Casting.Outputs[OLE DB 目标错误输出]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB 目标错误输出"
+                  synchronousInputId="Package\Data Flow\Log Data Failed Casting.Inputs[OLE DB 目标输入]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow\Log Data Failed Casting.Outputs[OLE DB 目标错误输出].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow\Log Data Failed Casting.Outputs[OLE DB 目标错误输出].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Data Flow\Log Data Failed Casting.Outputs[OLE DB 目标错误输出].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow\Log Data Failed Casting.Outputs[OLE DB 目标错误输出].Columns[ErrorColumn]"
                       name="ErrorColumn"
                       specialFlags="2" />
                   </outputColumns>
@@ -1080,20 +1291,25 @@
           </components>
           <paths>
             <path
+              refId="Package\Data Flow.Paths[Derived Column Error Output]"
+              endId="Package\Data Flow\Log Data Failed Casting.Inputs[OLE DB 目标输入]"
+              name="Derived Column Error Output"
+              startId="Package\Data Flow\Cast Data Types.Outputs[派生列错误输出]" />
+            <path
               refId="Package\Data Flow.Paths[平面文件源输出]"
               endId="Package\Data Flow\Remove Double Quotes, Trim.Inputs[派生列输入]"
               name="平面文件源输出"
               startId="Package\Data Flow\Import CSV.Outputs[平面文件源输出]" />
             <path
               refId="Package\Data Flow.Paths[派生列输出]"
-              endId="Package\Data Flow\Load Staging Table.Inputs[OLE DB 目标输入]"
-              name="派生列输出"
-              startId="Package\Data Flow\Cast Data Types.Outputs[派生列输出]" />
-            <path
-              refId="Package\Data Flow.Paths[派生列输出1]"
               endId="Package\Data Flow\Cast Data Types.Inputs[派生列输入]"
               name="派生列输出"
               startId="Package\Data Flow\Remove Double Quotes, Trim.Outputs[派生列输出]" />
+            <path
+              refId="Package\Data Flow.Paths[派生列输出1]"
+              endId="Package\Data Flow\Load Staging Table.Inputs[OLE DB 目标输入]"
+              name="派生列输出"
+              startId="Package\Data Flow\Cast Data Types.Outputs[派生列输出]" />
           </paths>
         </pipeline>
       </DTS:ObjectData>
@@ -1174,6 +1390,10 @@
       <GraphLayout
         Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
+          Size="216.8,41.6"
+          Id="Package\Create Schema and Table"
+          TopLeft="124.99999627471,33.2222208470842" />
+        <NodeLayout
           Size="132,41.6"
           Id="Package\Data Flow"
           TopLeft="163.74999511987,111.222217618499" />
@@ -1181,6 +1401,10 @@
           Size="228,41.6"
           Id="Package\Deduplicate Staging Table"
           TopLeft="121.249996386469,201.499991659489" />
+        <NodeLayout
+          Size="288.8,41.6"
+          Id="Package\Move Invalid Records to Error Table"
+          TopLeft="95.624997150153,304.055542970054" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint]"
           TopLeft="232.499995753169,152.822217618499">
@@ -1203,24 +1427,20 @@
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <NodeLayout
-          Size="186.4,41.6"
-          Id="Package\Create Schema and Table"
-          TopLeft="136.874995920807,36.1111096163959" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 1]"
-          TopLeft="229.912495520339,77.7111096163959">
+          TopLeft="231.57499569729,74.8222208470842">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,33.5111080021031"
+              EndConnector="0,36.3999967714148"
               Start="0,0"
-              End="0,26.0111080021031">
+              End="0,28.8999967714148">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,26.0111080021031" />
+                    End="0,28.8999967714148" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -1229,10 +1449,6 @@
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <NodeLayout
-          Size="288.8,41.6"
-          Id="Package\Move Invalid Records to Error Table"
-          TopLeft="95.624997150153,304.055542970054" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 2]"
           TopLeft="237.637496768311,243.099991659489">
@@ -1262,23 +1478,111 @@
     design-time-name="Package\Data Flow">
     <LayoutInfo>
       <GraphLayout
-        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
-        <NodeLayout
-          Size="186.4,41.6"
-          Id="Package\Data Flow\Load Staging Table"
-          TopLeft="102.499996945262,306.944431739365" />
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
           Size="168.8,41.6"
           Id="Package\Data Flow\Cast Data Types"
           TopLeft="108.749996758997,202.611102890177" />
         <NodeLayout
-          Size="138.4,41.6"
-          Id="Package\Data Flow\Import CSV"
-          TopLeft="119.999996423721,23.1111101544934" />
+          Size="186.4,41.6"
+          Id="Package\Data Flow\Load Staging Table"
+          TopLeft="102.499996945262,306.944431739365" />
         <NodeLayout
           Size="234.4,41.6"
           Id="Package\Data Flow\Remove Double Quotes, Trim"
           TopLeft="78.7499976530671,114.833328580139" />
+        <NodeLayout
+          Size="216.8,41.6"
+          Id="Package\Data Flow\Log Data Failed Casting"
+          TopLeft="353.124989476055,307.511102621129" />
+        <NodeLayout
+          Size="138.4,41.6"
+          Id="Package\Data Flow\Import CSV"
+          TopLeft="119.999996423721,23.1111101544934" />
+        <EdgeLayout
+          Id="Package\Data Flow.Paths[Derived Column Error Output]"
+          TopLeft="219.949996758997,244.211102890177">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="241.574992717058,63.2999997309517"
+              Start="0,0"
+              End="241.574992717058,55.7999997309517">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,21.6766196091748" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,21.6766196091748"
+                    Point2="0,25.6766196091748"
+                    Point3="4,25.6766196091748" />
+                  <mssgle:LineSegment
+                    End="237.574992717058,25.6766196091748" />
+                  <mssgle:CubicBezierSegment
+                    Point1="237.574992717058,25.6766196091748"
+                    Point2="241.574992717058,25.6766196091748"
+                    Point3="241.574992717058,29.6766196091748" />
+                  <mssgle:LineSegment
+                    End="241.574992717058,55.7999997309517" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="55.8261096397789,30.6766196091748,129.9227734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Data Flow.Paths[派生列输出1]"
+          TopLeft="194.42499685213,244.211102890177">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,62.7333288491878"
+              Start="0,0"
+              End="0,55.2333288491878">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,55.2333288491878" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Data Flow.Paths[派生列输出]"
+          TopLeft="194.549997206032,156.433328580139">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,46.1777743100384"
+              Start="0,0"
+              End="0,38.6777743100384">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,38.6777743100384" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
         <EdgeLayout
           Id="Package\Data Flow.Paths[平面文件源输出]"
           TopLeft="192.574997038394,64.7111101544934">
@@ -1298,51 +1602,9 @@
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Data Flow.Paths[派生列输出1]"
-          TopLeft="194.549997206032,156.433328580139">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,46.1777743100384"
-              Start="0,0"
-              End="0,38.6777743100384">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,38.6777743100384" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Data Flow.Paths[派生列输出]"
-          TopLeft="194.42499685213,244.211102890177">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,62.7333288491878"
-              Start="0,0"
-              End="0,55.2333288491878">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,55.2333288491878" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>
@@ -1350,6 +1612,19 @@
   </TaskHost>
   <PipelineComponentMetadata
     design-time-name="Package\Data Flow\Load Staging Table">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Data Flow\Log Data Failed Casting">
     <Properties>
       <Property>
         <Name>DataSourceViewID</Name>

@@ -7,7 +7,7 @@ WITH RankedRecords AS (
           RegistrationDate
       ) AS Rank 
     FROM 
-      [KoreAssignment_Yuheng_Miao].[dbo].[Testing Table]
+      stg.Users
 ) 
 DELETE FROM 
     RankedRecords 

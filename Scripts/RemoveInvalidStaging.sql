@@ -23,7 +23,7 @@ SELECT
     RegistrationDate, 
     LastLoginDate, 
     PurchaseTotal 
-FROM [KoreAssignment_Yuheng_Miao].[dbo].[Testing Table]
+FROM stg.Users
 WHERE 
     UserID IS NULL
     OR FullName IS NULL
@@ -35,7 +35,7 @@ WHERE
 GO
 
 DELETE FROM 
-    [KoreAssignment_Yuheng_Miao].[dbo].[Testing Table] 
+    stg.Users 
 WHERE 
     UserID IS NULL
     OR FullName IS NULL
