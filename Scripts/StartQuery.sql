@@ -8,6 +8,16 @@ GO
 USE [KoreAssignment_Yuheng_Miao]
 GO
 
+-- Check and create database if it does not exist 
+IF NOT EXISTS (SELECT * FROM sys.databases WHERE name = N'KoreAssignment_Yuheng_Miao')
+BEGIN
+    CREATE DATABASE [KoreAssignment_Yuheng_Miao]
+END
+GO
+
+USE [KoreAssignment_Yuheng_Miao]
+GO
+
 -- Check and create stg schema if it does not exist
 IF NOT EXISTS (SELECT * FROM sys.schemas WHERE name = N'stg')
 BEGIN
@@ -29,6 +39,12 @@ BEGIN
 END
 GO
 
+-- Check and create err schema if it does not exist
+IF NOT EXISTS (SELECT * FROM sys.schemas WHERE name = N'importerr')
+BEGIN
+    EXEC('CREATE SCHEMA importerr');
+END
+GO
 
 -- Check and create stg.Users table if it does not exist
 IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'stg.Users') AND type in (N'U'))
@@ -75,6 +91,22 @@ BEGIN
         RegistrationDate DATE,
         LastLoginDate DATE,
         PurchaseTotal FLOAT
+    );
+END
+GO
+
+-- Check and create stg.Users table if it does not exist
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'importerr.Users') AND type in (N'U'))
+BEGIN
+    CREATE TABLE importerr.Users (
+		ErroutID INT IDENTITY(1,1) PRIMARY KEY,
+		UserID NVARCHAR(50),
+		FullName NVARCHAR(255),
+		Age NVARCHAR(50),
+		Email NVARCHAR(255),
+		RegistrationDate NVARCHAR(50),
+		LastLoginDate NVARCHAR(50),
+		PurchaseTotal NVARCHAR(50)
     );
 END
 GO
