@@ -11,11 +11,21 @@
   DTS:LocaleID="1033"
   DTS:ObjectName="Package"
   DTS:PackageType="5"
-  DTS:VersionBuild="82"
-  DTS:VersionGUID="{372E656E-14C4-4221-964D-E904168286EA}">
+  DTS:VersionBuild="106"
+  DTS:VersionGUID="{DACFB8D4-F560-45AE-97B1-F8E4471754A6}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[CreateSchema.sql]"
+      DTS:CreationName="FILE"
+      DTS:DTSID="{ECBB6BD1-61C8-44DB-9EE4-51699191F375}"
+      DTS:ObjectName="CreateSchema.sql">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="C:\Users\RAE\YM\ETLWithSSIS\Scripts\CreateSchema.sql" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
     <DTS:ConnectionManager
       DTS:refId="Package.ConnectionManagers[DeduplicateStaging.sql]"
       DTS:CreationName="FILE"
@@ -131,37 +141,9 @@
           DTS:ConnectionString="C:\Users\RAE\YM\ETLWithSSIS\Scripts\RemoveInvalidStaging.sql" />
       </DTS:ObjectData>
     </DTS:ConnectionManager>
-    <DTS:ConnectionManager
-      DTS:refId="Package.ConnectionManagers[StartQuery.sql]"
-      DTS:CreationName="FILE"
-      DTS:DTSID="{A7755053-8E51-402B-A34B-8C07622F8345}"
-      DTS:ObjectName="StartQuery.sql">
-      <DTS:ObjectData>
-        <DTS:ConnectionManager
-          DTS:ConnectionString="C:\Users\RAE\YM\ETLWithSSIS\Scripts\StartQuery.sql" />
-      </DTS:ObjectData>
-    </DTS:ConnectionManager>
   </DTS:ConnectionManagers>
   <DTS:Variables />
   <DTS:Executables>
-    <DTS:Executable
-      DTS:refId="Package\Create Schema and Table"
-      DTS:CreationName="Microsoft.ExecuteSQLTask"
-      DTS:Description="Execute SQL Task to create schema and table required for following tasks"
-      DTS:DTSID="{BA72F570-4A10-4DA5-A287-CFD020C2162D}"
-      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
-      DTS:LocaleID="-1"
-      DTS:ObjectName="Create Schema and Table"
-      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
-      DTS:ThreadHint="0">
-      <DTS:Variables />
-      <DTS:ObjectData>
-        <SQLTask:SqlTaskData
-          SQLTask:Connection="{61F04048-F653-4A7A-92F1-63EF4BB99814}"
-          SQLTask:SqlStmtSourceType="FileConnection"
-          SQLTask:SqlStatementSource="StartQuery.sql" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
-      </DTS:ObjectData>
-    </DTS:Executable>
     <DTS:Executable
       DTS:refId="Package\Data Flow"
       DTS:CreationName="Microsoft.Pipeline"
@@ -697,7 +679,7 @@
                 <property
                   dataType="System.String"
                   description="指定用于打开行集的数据库对象的名称。"
-                  name="OpenRowset">[TestStaging]</property>
+                  name="OpenRowset">[stg].[Users]</property>
                 <property
                   dataType="System.String"
                   description="指定包含用于打开行集的数据库对象名的变量。"
@@ -830,6 +812,10 @@
                       refId="Package\Data Flow\Load Staging Table.Inputs[OLE DB 目标输入].ExternalColumns[PurchaseTotal]"
                       dataType="r8"
                       name="PurchaseTotal" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow\Load Staging Table.Inputs[OLE DB 目标输入].ExternalColumns[StgID]"
+                      dataType="i4"
+                      name="StgID" />
                   </externalMetadataColumns>
                 </input>
               </inputs>
@@ -874,7 +860,7 @@
                 <property
                   dataType="System.String"
                   description="指定用于打开行集的数据库对象的名称。"
-                  name="OpenRowset">[FailedCasting]</property>
+                  name="OpenRowset">[importerr].[Users]</property>
                 <property
                   dataType="System.String"
                   description="指定包含用于打开行集的数据库对象名的变量。"
@@ -979,18 +965,6 @@
                       cachedName="PurchaseTotal"
                       externalMetadataColumnId="Package\Data Flow\Log Data Failed Casting.Inputs[OLE DB 目标输入].ExternalColumns[PurchaseTotal]"
                       lineageId="Package\Data Flow\Import CSV.Outputs[平面文件源输出].Columns[PurchaseTotal]" />
-                    <inputColumn
-                      refId="Package\Data Flow\Log Data Failed Casting.Inputs[OLE DB 目标输入].Columns[ErrorCode]"
-                      cachedDataType="i4"
-                      cachedName="ErrorCode"
-                      externalMetadataColumnId="Package\Data Flow\Log Data Failed Casting.Inputs[OLE DB 目标输入].ExternalColumns[ErrorCode]"
-                      lineageId="Package\Data Flow\Cast Data Types.Outputs[派生列错误输出].Columns[ErrorCode]" />
-                    <inputColumn
-                      refId="Package\Data Flow\Log Data Failed Casting.Inputs[OLE DB 目标输入].Columns[ErrorColumn]"
-                      cachedDataType="i4"
-                      cachedName="ErrorColumn"
-                      externalMetadataColumnId="Package\Data Flow\Log Data Failed Casting.Inputs[OLE DB 目标输入].ExternalColumns[ErrorColumn]"
-                      lineageId="Package\Data Flow\Cast Data Types.Outputs[派生列错误输出].Columns[ErrorColumn]" />
                   </inputColumns>
                   <externalMetadataColumns
                     isUsed="True">
@@ -1030,13 +1004,9 @@
                       length="50"
                       name="PurchaseTotal" />
                     <externalMetadataColumn
-                      refId="Package\Data Flow\Log Data Failed Casting.Inputs[OLE DB 目标输入].ExternalColumns[ErrorCode]"
+                      refId="Package\Data Flow\Log Data Failed Casting.Inputs[OLE DB 目标输入].ExternalColumns[ErroutID]"
                       dataType="i4"
-                      name="ErrorCode" />
-                    <externalMetadataColumn
-                      refId="Package\Data Flow\Log Data Failed Casting.Inputs[OLE DB 目标输入].ExternalColumns[ErrorColumn]"
-                      dataType="i4"
-                      name="ErrorColumn" />
+                      name="ErroutID" />
                   </externalMetadataColumns>
                 </input>
               </inputs>
@@ -1346,6 +1316,819 @@
           SQLTask:SqlStatementSource="RemoveInvalidStaging.sql" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
       </DTS:ObjectData>
     </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Upload to Production"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="数据流任务"
+      DTS:DTSID="{AE88A8A5-5269-4F8B-82D6-47A45797215D}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Upload to Production"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Upload to Production\Insert No Matching Data"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB 目标;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; 保留所有权利; http://www.microsoft.com/sql/support;4"
+              description="OLE DB 目标"
+              name="Insert No Matching Data"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="命令超时前等待的时间(秒)。值为 0，表示无限期等待。"
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="指定用于打开行集的数据库对象的名称。"
+                  name="OpenRowset">[prod].[Users]</property>
+                <property
+                  dataType="System.String"
+                  description="指定包含用于打开行集的数据库对象名的变量。"
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="要执行的 SQL 命令。"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="指定当数据源中没有代码页信息时使用的列代码页。"
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="描述字符数据时，强制使用 DefaultCodePage 属性值。"
+                  name="AlwaysUseDefaultCodePage">true</property>
+                <property
+                  dataType="System.Int32"
+                  description="指定用于访问数据库的模式。"
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="指示是否将为标识列提供的值复制到目标。如果设置为 False，则将在目标中为标识列自动生成值。仅当启用了快速加载时适用。"
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="指示对于包含 Null 值的列是否将 Null 值插入目标中。如果为 False，则对于包含 Null 值的列会将其默认值插入目标中。仅当启用了快速加载时适用。"
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="指定将用于快速加载的选项。仅当启用了快速加载时适用。"
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="指定在插入数据期间何时发出提交命令。如果值为 0，则指定在数据插入结束时发出一个提交命令。仅当启用了快速加载时适用。"
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Upload to Production\Insert No Matching Data.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[DESKTOP-UO8UD6K.KoreAssignment_Yuheng_Miao]"
+                  connectionManagerRefId="Package.ConnectionManagers[DESKTOP-UO8UD6K.KoreAssignment_Yuheng_Miao]"
+                  description="指定用于访问数据库的 OLE DB 运行时连接。"
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Upload to Production\Insert No Matching Data.Inputs[OLE DB 目标输入]"
+                  errorOrTruncationOperation="插入"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB 目标输入">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Upload to Production\Insert No Matching Data.Inputs[OLE DB 目标输入].Columns[UserID]"
+                      cachedDataType="i4"
+                      cachedName="UserID"
+                      externalMetadataColumnId="Package\Upload to Production\Insert No Matching Data.Inputs[OLE DB 目标输入].ExternalColumns[UserID]"
+                      lineageId="Package\Upload to Production\Staging Table.Outputs[OLE DB 源输出].Columns[UserID]" />
+                    <inputColumn
+                      refId="Package\Upload to Production\Insert No Matching Data.Inputs[OLE DB 目标输入].Columns[FullName]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="FullName"
+                      externalMetadataColumnId="Package\Upload to Production\Insert No Matching Data.Inputs[OLE DB 目标输入].ExternalColumns[FullName]"
+                      lineageId="Package\Upload to Production\Staging Table.Outputs[OLE DB 源输出].Columns[FullName]" />
+                    <inputColumn
+                      refId="Package\Upload to Production\Insert No Matching Data.Inputs[OLE DB 目标输入].Columns[Age]"
+                      cachedDataType="i4"
+                      cachedName="Age"
+                      externalMetadataColumnId="Package\Upload to Production\Insert No Matching Data.Inputs[OLE DB 目标输入].ExternalColumns[Age]"
+                      lineageId="Package\Upload to Production\Staging Table.Outputs[OLE DB 源输出].Columns[Age]" />
+                    <inputColumn
+                      refId="Package\Upload to Production\Insert No Matching Data.Inputs[OLE DB 目标输入].Columns[Email]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="Email"
+                      externalMetadataColumnId="Package\Upload to Production\Insert No Matching Data.Inputs[OLE DB 目标输入].ExternalColumns[Email]"
+                      lineageId="Package\Upload to Production\Staging Table.Outputs[OLE DB 源输出].Columns[Email]" />
+                    <inputColumn
+                      refId="Package\Upload to Production\Insert No Matching Data.Inputs[OLE DB 目标输入].Columns[RegistrationDate]"
+                      cachedDataType="dbDate"
+                      cachedName="RegistrationDate"
+                      externalMetadataColumnId="Package\Upload to Production\Insert No Matching Data.Inputs[OLE DB 目标输入].ExternalColumns[RegistrationDate]"
+                      lineageId="Package\Upload to Production\Staging Table.Outputs[OLE DB 源输出].Columns[RegistrationDate]" />
+                    <inputColumn
+                      refId="Package\Upload to Production\Insert No Matching Data.Inputs[OLE DB 目标输入].Columns[LastLoginDate]"
+                      cachedDataType="dbDate"
+                      cachedName="LastLoginDate"
+                      externalMetadataColumnId="Package\Upload to Production\Insert No Matching Data.Inputs[OLE DB 目标输入].ExternalColumns[LastLoginDate]"
+                      lineageId="Package\Upload to Production\Staging Table.Outputs[OLE DB 源输出].Columns[LastLoginDate]" />
+                    <inputColumn
+                      refId="Package\Upload to Production\Insert No Matching Data.Inputs[OLE DB 目标输入].Columns[PurchaseTotal]"
+                      cachedDataType="r8"
+                      cachedName="PurchaseTotal"
+                      externalMetadataColumnId="Package\Upload to Production\Insert No Matching Data.Inputs[OLE DB 目标输入].ExternalColumns[PurchaseTotal]"
+                      lineageId="Package\Upload to Production\Staging Table.Outputs[OLE DB 源输出].Columns[PurchaseTotal]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Upload to Production\Insert No Matching Data.Inputs[OLE DB 目标输入].ExternalColumns[UserID]"
+                      dataType="i4"
+                      name="UserID" />
+                    <externalMetadataColumn
+                      refId="Package\Upload to Production\Insert No Matching Data.Inputs[OLE DB 目标输入].ExternalColumns[FullName]"
+                      dataType="wstr"
+                      length="255"
+                      name="FullName" />
+                    <externalMetadataColumn
+                      refId="Package\Upload to Production\Insert No Matching Data.Inputs[OLE DB 目标输入].ExternalColumns[Age]"
+                      dataType="i4"
+                      name="Age" />
+                    <externalMetadataColumn
+                      refId="Package\Upload to Production\Insert No Matching Data.Inputs[OLE DB 目标输入].ExternalColumns[Email]"
+                      dataType="wstr"
+                      length="255"
+                      name="Email" />
+                    <externalMetadataColumn
+                      refId="Package\Upload to Production\Insert No Matching Data.Inputs[OLE DB 目标输入].ExternalColumns[RegistrationDate]"
+                      dataType="dbDate"
+                      name="RegistrationDate" />
+                    <externalMetadataColumn
+                      refId="Package\Upload to Production\Insert No Matching Data.Inputs[OLE DB 目标输入].ExternalColumns[LastLoginDate]"
+                      dataType="dbDate"
+                      name="LastLoginDate" />
+                    <externalMetadataColumn
+                      refId="Package\Upload to Production\Insert No Matching Data.Inputs[OLE DB 目标输入].ExternalColumns[PurchaseTotal]"
+                      dataType="r8"
+                      name="PurchaseTotal" />
+                    <externalMetadataColumn
+                      refId="Package\Upload to Production\Insert No Matching Data.Inputs[OLE DB 目标输入].ExternalColumns[ID]"
+                      dataType="i4"
+                      name="ID" />
+                    <externalMetadataColumn
+                      refId="Package\Upload to Production\Insert No Matching Data.Inputs[OLE DB 目标输入].ExternalColumns[RecordLastUpdated]"
+                      dataType="dbTimeStamp"
+                      name="RecordLastUpdated" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Upload to Production\Insert No Matching Data.Outputs[OLE DB 目标错误输出]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB 目标错误输出"
+                  synchronousInputId="Package\Upload to Production\Insert No Matching Data.Inputs[OLE DB 目标输入]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Upload to Production\Insert No Matching Data.Outputs[OLE DB 目标错误输出].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Upload to Production\Insert No Matching Data.Outputs[OLE DB 目标错误输出].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Upload to Production\Insert No Matching Data.Outputs[OLE DB 目标错误输出].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Upload to Production\Insert No Matching Data.Outputs[OLE DB 目标错误输出].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Upload to Production\Split Data"
+              componentClassID="Microsoft.Lookup"
+              contactInfo="查找;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; 保留所有权利; http://www.microsoft.com/sql/support;6"
+              description="通过在表中查找值，将其他列与数据流联接起来。例如，将 &quot;employee id&quot; 列与 employees 表联接，以获取 &quot;hire date&quot; 和 &quot;employee name&quot;。建议在可将查找表放入内存中的情况下使用此转换。"
+              name="Split Data"
+              usesDispositions="true"
+              version="6">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="指定生成查找表的 SQL 语句。"
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from [prod].[Users]</property>
+                <property
+                  dataType="System.String"
+                  description="指定使用参数生成查找表的 SQL 语句。"
+                  expressionType="Notify"
+                  name="SqlCommandParam"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from (select * from [prod].[Users]) [refTable]
+where [refTable].[UserID] = ?</property>
+                <property
+                  dataType="System.Int32"
+                  description="指定用于访问引用数据集的连接类型。"
+                  name="ConnectionType"
+                  typeConverter="LookupConnectionType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="指定查找表的缓存类型。"
+                  name="CacheType"
+                  typeConverter="CacheType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="指定查找转换如何处理在引用数据集中无匹配项的行。"
+                  name="NoMatchBehavior"
+                  typeConverter="LookupNoMatchBehavior">1</property>
+                <property
+                  dataType="System.Int32"
+                  description="指定为在引用数据集中没有匹配项的行分配的缓存百分比。"
+                  name="NoMatchCachePercentage">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="引用缓存在 32 位平台上的最大内存使用量。"
+                  name="MaxMemoryUsage">25</property>
+                <property
+                  dataType="System.Int64"
+                  description="引用缓存在 64 位平台上的最大内存使用量。"
+                  name="MaxMemoryUsage64">25</property>
+                <property
+                  dataType="System.String"
+                  description="指示是否引用 XML 格式的元数据。"
+                  name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="ID" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="UserID" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="FullName" dataType="DT_WSTR" length="255" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="Age" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="Email" dataType="DT_WSTR" length="255" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="RegistrationDate" dataType="DT_DBDATE" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="LastLoginDate" dataType="DT_DBDATE" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="PurchaseTotal" dataType="DT_R8" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="RecordLastUpdated" dataType="DT_DBTIMESTAMP" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                <property
+                  containsID="true"
+                  dataType="System.String"
+                  description="指定世系标识符列表，这些标识符映射到 SQLCommand 属性中 SQL 语句使用的参数。列表中的项与项之间用分号分隔。"
+                  name="ParameterMap">#{Package\Upload to Production\Staging Table.Outputs[OLE DB 源输出].Columns[UserID]};</property>
+                <property
+                  dataType="System.Int32"
+                  description="指定当数据源中没有代码页信息时使用的列代码页。"
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="确定在使用完全缓存模式时引用数据中的重复键是否应视作错误。"
+                  name="TreatDuplicateKeysAsError">false</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Upload to Production\Split Data.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[DESKTOP-UO8UD6K.KoreAssignment_Yuheng_Miao]"
+                  connectionManagerRefId="Package.ConnectionManagers[DESKTOP-UO8UD6K.KoreAssignment_Yuheng_Miao]"
+                  description="用于访问查找数据的连接管理器。"
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Upload to Production\Split Data.Inputs[查找输入]"
+                  name="查找输入">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Upload to Production\Split Data.Inputs[查找输入].Columns[UserID]"
+                      cachedDataType="i4"
+                      cachedName="UserID"
+                      lineageId="Package\Upload to Production\Staging Table.Outputs[OLE DB 源输出].Columns[UserID]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="指定某列在引用表中联接的列。"
+                          name="JoinToReferenceColumn">UserID</property>
+                        <property
+                          dataType="System.Null"
+                          description="指定属于某列复制源的引用表中的列。"
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Upload to Production\Split Data.Outputs[查找匹配输出]"
+                  errorOrTruncationOperation="查找"
+                  exclusionGroup="1"
+                  name="查找匹配输出"
+                  synchronousInputId="Package\Upload to Production\Split Data.Inputs[查找输入]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Upload to Production\Split Data.Outputs[查找无匹配输出]"
+                  description="用于处理在引用数据集中无匹配项的行的查找输出。当 NoMatchBehavior 属性设置为“将没有匹配项的行发送至无匹配输出。”时使用此输出。"
+                  exclusionGroup="1"
+                  name="查找无匹配输出"
+                  synchronousInputId="Package\Upload to Production\Split Data.Inputs[查找输入]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Upload to Production\Split Data.Outputs[查找错误输出]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="查找错误输出"
+                  synchronousInputId="Package\Upload to Production\Split Data.Inputs[查找输入]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Upload to Production\Split Data.Outputs[查找错误输出].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Upload to Production\Split Data.Outputs[查找错误输出].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Upload to Production\Split Data.Outputs[查找错误输出].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Upload to Production\Split Data.Outputs[查找错误输出].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Upload to Production\Staging Table"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB 源;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; 保留所有权利; http://www.microsoft.com/sql/support;7"
+              description="OLE DB 源"
+              name="Staging Table"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="命令超时前等待的时间(秒)。值为 0，表示无限期等待。"
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="指定用于打开行集的数据库对象的名称。"
+                  name="OpenRowset">[stg].[Users]</property>
+                <property
+                  dataType="System.String"
+                  description="指定包含用于打开行集的数据库对象名的变量。"
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="要执行的 SQL 命令。"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.String"
+                  description="包含要执行的 SQL 命令的变量。"
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="指定当数据源中没有代码页信息时使用的列代码页。"
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="描述字符数据时，强制使用 DefaultCodePage 属性值。"
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="指定用于访问数据库的模式。"
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.String"
+                  description="SQL 命令中的参数与变量之间的映射。"
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Upload to Production\Staging Table.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[DESKTOP-UO8UD6K.KoreAssignment_Yuheng_Miao]"
+                  connectionManagerRefId="Package.ConnectionManagers[DESKTOP-UO8UD6K.KoreAssignment_Yuheng_Miao]"
+                  description="指定用于访问数据库的 OLE DB 运行时连接。"
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Upload to Production\Staging Table.Outputs[OLE DB 源输出]"
+                  name="OLE DB 源输出">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Upload to Production\Staging Table.Outputs[OLE DB 源输出].Columns[UserID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="转换"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Upload to Production\Staging Table.Outputs[OLE DB 源输出].ExternalColumns[UserID]"
+                      lineageId="Package\Upload to Production\Staging Table.Outputs[OLE DB 源输出].Columns[UserID]"
+                      name="UserID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Upload to Production\Staging Table.Outputs[OLE DB 源输出].Columns[FullName]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="转换"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Upload to Production\Staging Table.Outputs[OLE DB 源输出].ExternalColumns[FullName]"
+                      length="255"
+                      lineageId="Package\Upload to Production\Staging Table.Outputs[OLE DB 源输出].Columns[FullName]"
+                      name="FullName"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Upload to Production\Staging Table.Outputs[OLE DB 源输出].Columns[Age]"
+                      dataType="i4"
+                      errorOrTruncationOperation="转换"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Upload to Production\Staging Table.Outputs[OLE DB 源输出].ExternalColumns[Age]"
+                      lineageId="Package\Upload to Production\Staging Table.Outputs[OLE DB 源输出].Columns[Age]"
+                      name="Age"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Upload to Production\Staging Table.Outputs[OLE DB 源输出].Columns[Email]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="转换"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Upload to Production\Staging Table.Outputs[OLE DB 源输出].ExternalColumns[Email]"
+                      length="255"
+                      lineageId="Package\Upload to Production\Staging Table.Outputs[OLE DB 源输出].Columns[Email]"
+                      name="Email"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Upload to Production\Staging Table.Outputs[OLE DB 源输出].Columns[RegistrationDate]"
+                      dataType="dbDate"
+                      errorOrTruncationOperation="转换"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Upload to Production\Staging Table.Outputs[OLE DB 源输出].ExternalColumns[RegistrationDate]"
+                      lineageId="Package\Upload to Production\Staging Table.Outputs[OLE DB 源输出].Columns[RegistrationDate]"
+                      name="RegistrationDate"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Upload to Production\Staging Table.Outputs[OLE DB 源输出].Columns[LastLoginDate]"
+                      dataType="dbDate"
+                      errorOrTruncationOperation="转换"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Upload to Production\Staging Table.Outputs[OLE DB 源输出].ExternalColumns[LastLoginDate]"
+                      lineageId="Package\Upload to Production\Staging Table.Outputs[OLE DB 源输出].Columns[LastLoginDate]"
+                      name="LastLoginDate"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Upload to Production\Staging Table.Outputs[OLE DB 源输出].Columns[PurchaseTotal]"
+                      dataType="r8"
+                      errorOrTruncationOperation="转换"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Upload to Production\Staging Table.Outputs[OLE DB 源输出].ExternalColumns[PurchaseTotal]"
+                      lineageId="Package\Upload to Production\Staging Table.Outputs[OLE DB 源输出].Columns[PurchaseTotal]"
+                      name="PurchaseTotal"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Upload to Production\Staging Table.Outputs[OLE DB 源输出].Columns[StgID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="转换"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Upload to Production\Staging Table.Outputs[OLE DB 源输出].ExternalColumns[StgID]"
+                      lineageId="Package\Upload to Production\Staging Table.Outputs[OLE DB 源输出].Columns[StgID]"
+                      name="StgID"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Upload to Production\Staging Table.Outputs[OLE DB 源输出].ExternalColumns[UserID]"
+                      dataType="i4"
+                      name="UserID" />
+                    <externalMetadataColumn
+                      refId="Package\Upload to Production\Staging Table.Outputs[OLE DB 源输出].ExternalColumns[FullName]"
+                      dataType="wstr"
+                      length="255"
+                      name="FullName" />
+                    <externalMetadataColumn
+                      refId="Package\Upload to Production\Staging Table.Outputs[OLE DB 源输出].ExternalColumns[Age]"
+                      dataType="i4"
+                      name="Age" />
+                    <externalMetadataColumn
+                      refId="Package\Upload to Production\Staging Table.Outputs[OLE DB 源输出].ExternalColumns[Email]"
+                      dataType="wstr"
+                      length="255"
+                      name="Email" />
+                    <externalMetadataColumn
+                      refId="Package\Upload to Production\Staging Table.Outputs[OLE DB 源输出].ExternalColumns[RegistrationDate]"
+                      dataType="dbDate"
+                      name="RegistrationDate" />
+                    <externalMetadataColumn
+                      refId="Package\Upload to Production\Staging Table.Outputs[OLE DB 源输出].ExternalColumns[LastLoginDate]"
+                      dataType="dbDate"
+                      name="LastLoginDate" />
+                    <externalMetadataColumn
+                      refId="Package\Upload to Production\Staging Table.Outputs[OLE DB 源输出].ExternalColumns[PurchaseTotal]"
+                      dataType="r8"
+                      name="PurchaseTotal" />
+                    <externalMetadataColumn
+                      refId="Package\Upload to Production\Staging Table.Outputs[OLE DB 源输出].ExternalColumns[StgID]"
+                      dataType="i4"
+                      name="StgID" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Upload to Production\Staging Table.Outputs[OLE DB 源错误输出]"
+                  isErrorOut="true"
+                  name="OLE DB 源错误输出">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Upload to Production\Staging Table.Outputs[OLE DB 源错误输出].Columns[StgID]"
+                      dataType="i4"
+                      lineageId="Package\Upload to Production\Staging Table.Outputs[OLE DB 源错误输出].Columns[StgID]"
+                      name="StgID" />
+                    <outputColumn
+                      refId="Package\Upload to Production\Staging Table.Outputs[OLE DB 源错误输出].Columns[UserID]"
+                      dataType="i4"
+                      lineageId="Package\Upload to Production\Staging Table.Outputs[OLE DB 源错误输出].Columns[UserID]"
+                      name="UserID" />
+                    <outputColumn
+                      refId="Package\Upload to Production\Staging Table.Outputs[OLE DB 源错误输出].Columns[FullName]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Upload to Production\Staging Table.Outputs[OLE DB 源错误输出].Columns[FullName]"
+                      name="FullName" />
+                    <outputColumn
+                      refId="Package\Upload to Production\Staging Table.Outputs[OLE DB 源错误输出].Columns[Age]"
+                      dataType="i4"
+                      lineageId="Package\Upload to Production\Staging Table.Outputs[OLE DB 源错误输出].Columns[Age]"
+                      name="Age" />
+                    <outputColumn
+                      refId="Package\Upload to Production\Staging Table.Outputs[OLE DB 源错误输出].Columns[Email]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Upload to Production\Staging Table.Outputs[OLE DB 源错误输出].Columns[Email]"
+                      name="Email" />
+                    <outputColumn
+                      refId="Package\Upload to Production\Staging Table.Outputs[OLE DB 源错误输出].Columns[RegistrationDate]"
+                      dataType="dbDate"
+                      lineageId="Package\Upload to Production\Staging Table.Outputs[OLE DB 源错误输出].Columns[RegistrationDate]"
+                      name="RegistrationDate" />
+                    <outputColumn
+                      refId="Package\Upload to Production\Staging Table.Outputs[OLE DB 源错误输出].Columns[LastLoginDate]"
+                      dataType="dbDate"
+                      lineageId="Package\Upload to Production\Staging Table.Outputs[OLE DB 源错误输出].Columns[LastLoginDate]"
+                      name="LastLoginDate" />
+                    <outputColumn
+                      refId="Package\Upload to Production\Staging Table.Outputs[OLE DB 源错误输出].Columns[PurchaseTotal]"
+                      dataType="r8"
+                      lineageId="Package\Upload to Production\Staging Table.Outputs[OLE DB 源错误输出].Columns[PurchaseTotal]"
+                      name="PurchaseTotal" />
+                    <outputColumn
+                      refId="Package\Upload to Production\Staging Table.Outputs[OLE DB 源错误输出].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Upload to Production\Staging Table.Outputs[OLE DB 源错误输出].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Upload to Production\Staging Table.Outputs[OLE DB 源错误输出].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Upload to Production\Staging Table.Outputs[OLE DB 源错误输出].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Upload to Production\Upsert Matching Data"
+              componentClassID="Microsoft.OLEDBCommand"
+              contactInfo="OLE DB 命令;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; 保留所有权利; http://www.microsoft.com/sql/support;2"
+              description="对数据流中的每个行运行 SQL 语句。例如，对 &quot;new employees&quot; 表中的每个行调用 &quot;new employee setup&quot; 存储过程。注意: 对大型数据流中的每个行运行 SQL 语句可能需要花费很长时间。"
+              name="Upsert Matching Data"
+              usesDispositions="true"
+              version="2">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="命令超时前等待的时间(秒)。值为 0，表示无限期等待。"
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="要执行的 SQL 命令。"
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">UPDATE 
+    prod.Users 
+SET 
+    FullName = ?, 
+    Age = ?, 
+    Email = ?, 
+    RegistrationDate = ?, 
+    LastLoginDate = ?, 
+    PurchaseTotal = ?,
+    RecordLastUpdated = GETDATE()
+WHERE 
+    UserID = ?
+
+</property>
+                <property
+                  dataType="System.Int32"
+                  description="指定当数据源中没有代码页信息时使用的列代码页。"
+                  name="DefaultCodePage">1252</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Upload to Production\Upsert Matching Data.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[DESKTOP-UO8UD6K.KoreAssignment_Yuheng_Miao]"
+                  connectionManagerRefId="Package.ConnectionManagers[DESKTOP-UO8UD6K.KoreAssignment_Yuheng_Miao]"
+                  description="指定用于访问数据库的 OLE DB 运行时连接。"
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Upload to Production\Upsert Matching Data.Inputs[OLE DB 命令输入]"
+                  errorOrTruncationOperation="命令执行"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB 命令输入">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Upload to Production\Upsert Matching Data.Inputs[OLE DB 命令输入].Columns[UserID]"
+                      cachedDataType="i4"
+                      cachedName="UserID"
+                      externalMetadataColumnId="Package\Upload to Production\Upsert Matching Data.Inputs[OLE DB 命令输入].ExternalColumns[Param_6]"
+                      lineageId="Package\Upload to Production\Staging Table.Outputs[OLE DB 源输出].Columns[UserID]" />
+                    <inputColumn
+                      refId="Package\Upload to Production\Upsert Matching Data.Inputs[OLE DB 命令输入].Columns[PurchaseTotal]"
+                      cachedDataType="r8"
+                      cachedName="PurchaseTotal"
+                      externalMetadataColumnId="Package\Upload to Production\Upsert Matching Data.Inputs[OLE DB 命令输入].ExternalColumns[Param_5]"
+                      lineageId="Package\Upload to Production\Staging Table.Outputs[OLE DB 源输出].Columns[PurchaseTotal]" />
+                    <inputColumn
+                      refId="Package\Upload to Production\Upsert Matching Data.Inputs[OLE DB 命令输入].Columns[LastLoginDate]"
+                      cachedDataType="dbDate"
+                      cachedName="LastLoginDate"
+                      externalMetadataColumnId="Package\Upload to Production\Upsert Matching Data.Inputs[OLE DB 命令输入].ExternalColumns[Param_4]"
+                      lineageId="Package\Upload to Production\Staging Table.Outputs[OLE DB 源输出].Columns[LastLoginDate]" />
+                    <inputColumn
+                      refId="Package\Upload to Production\Upsert Matching Data.Inputs[OLE DB 命令输入].Columns[RegistrationDate]"
+                      cachedDataType="dbDate"
+                      cachedName="RegistrationDate"
+                      externalMetadataColumnId="Package\Upload to Production\Upsert Matching Data.Inputs[OLE DB 命令输入].ExternalColumns[Param_3]"
+                      lineageId="Package\Upload to Production\Staging Table.Outputs[OLE DB 源输出].Columns[RegistrationDate]" />
+                    <inputColumn
+                      refId="Package\Upload to Production\Upsert Matching Data.Inputs[OLE DB 命令输入].Columns[Email]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="Email"
+                      externalMetadataColumnId="Package\Upload to Production\Upsert Matching Data.Inputs[OLE DB 命令输入].ExternalColumns[Param_2]"
+                      lineageId="Package\Upload to Production\Staging Table.Outputs[OLE DB 源输出].Columns[Email]" />
+                    <inputColumn
+                      refId="Package\Upload to Production\Upsert Matching Data.Inputs[OLE DB 命令输入].Columns[Age]"
+                      cachedDataType="i4"
+                      cachedName="Age"
+                      externalMetadataColumnId="Package\Upload to Production\Upsert Matching Data.Inputs[OLE DB 命令输入].ExternalColumns[Param_1]"
+                      lineageId="Package\Upload to Production\Staging Table.Outputs[OLE DB 源输出].Columns[Age]" />
+                    <inputColumn
+                      refId="Package\Upload to Production\Upsert Matching Data.Inputs[OLE DB 命令输入].Columns[FullName]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="FullName"
+                      externalMetadataColumnId="Package\Upload to Production\Upsert Matching Data.Inputs[OLE DB 命令输入].ExternalColumns[Param_0]"
+                      lineageId="Package\Upload to Production\Staging Table.Outputs[OLE DB 源输出].Columns[FullName]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Upload to Production\Upsert Matching Data.Inputs[OLE DB 命令输入].ExternalColumns[Param_0]"
+                      dataType="wstr"
+                      length="255"
+                      name="Param_0">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="参数信息。匹配 OLE DB 的 DBPARAMFLAGSENUM 值。"
+                          name="DBParamInfoFlags">81</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\Upload to Production\Upsert Matching Data.Inputs[OLE DB 命令输入].ExternalColumns[Param_1]"
+                      dataType="i4"
+                      name="Param_1">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="参数信息。匹配 OLE DB 的 DBPARAMFLAGSENUM 值。"
+                          name="DBParamInfoFlags">65</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\Upload to Production\Upsert Matching Data.Inputs[OLE DB 命令输入].ExternalColumns[Param_2]"
+                      dataType="wstr"
+                      length="255"
+                      name="Param_2">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="参数信息。匹配 OLE DB 的 DBPARAMFLAGSENUM 值。"
+                          name="DBParamInfoFlags">81</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\Upload to Production\Upsert Matching Data.Inputs[OLE DB 命令输入].ExternalColumns[Param_3]"
+                      dataType="dbDate"
+                      name="Param_3">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="参数信息。匹配 OLE DB 的 DBPARAMFLAGSENUM 值。"
+                          name="DBParamInfoFlags">65</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\Upload to Production\Upsert Matching Data.Inputs[OLE DB 命令输入].ExternalColumns[Param_4]"
+                      dataType="dbDate"
+                      name="Param_4">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="参数信息。匹配 OLE DB 的 DBPARAMFLAGSENUM 值。"
+                          name="DBParamInfoFlags">65</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\Upload to Production\Upsert Matching Data.Inputs[OLE DB 命令输入].ExternalColumns[Param_5]"
+                      dataType="r8"
+                      name="Param_5">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="参数信息。匹配 OLE DB 的 DBPARAMFLAGSENUM 值。"
+                          name="DBParamInfoFlags">65</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\Upload to Production\Upsert Matching Data.Inputs[OLE DB 命令输入].ExternalColumns[Param_6]"
+                      dataType="i4"
+                      name="Param_6">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="参数信息。匹配 OLE DB 的 DBPARAMFLAGSENUM 值。"
+                          name="DBParamInfoFlags">81</property>
+                      </properties>
+                    </externalMetadataColumn>
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Upload to Production\Upsert Matching Data.Outputs[OLE DB 命令输出]"
+                  exclusionGroup="1"
+                  name="OLE DB 命令输出"
+                  synchronousInputId="Package\Upload to Production\Upsert Matching Data.Inputs[OLE DB 命令输入]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Upload to Production\Upsert Matching Data.Outputs[OLE DB 命令错误输出]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB 命令错误输出"
+                  synchronousInputId="Package\Upload to Production\Upsert Matching Data.Inputs[OLE DB 命令输入]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Upload to Production\Upsert Matching Data.Outputs[OLE DB 命令错误输出].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Upload to Production\Upsert Matching Data.Outputs[OLE DB 命令错误输出].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Upload to Production\Upsert Matching Data.Outputs[OLE DB 命令错误输出].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Upload to Production\Upsert Matching Data.Outputs[OLE DB 命令错误输出].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Upload to Production.Paths[No Match Output]"
+              endId="Package\Upload to Production\Insert No Matching Data.Inputs[OLE DB 目标输入]"
+              name="No Match Output"
+              startId="Package\Upload to Production\Split Data.Outputs[查找无匹配输出]" />
+            <path
+              refId="Package\Upload to Production.Paths[OLE DB 源输出]"
+              endId="Package\Upload to Production\Split Data.Inputs[查找输入]"
+              name="OLE DB 源输出"
+              startId="Package\Upload to Production\Staging Table.Outputs[OLE DB 源输出]" />
+            <path
+              refId="Package\Upload to Production.Paths[查找匹配输出]"
+              endId="Package\Upload to Production\Upsert Matching Data.Inputs[OLE DB 命令输入]"
+              name="查找匹配输出"
+              startId="Package\Upload to Production\Split Data.Outputs[查找匹配输出]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
   </DTS:Executables>
   <DTS:PrecedenceConstraints>
     <DTS:PrecedenceConstraint
@@ -1357,14 +2140,6 @@
       DTS:ObjectName="Constraint"
       DTS:To="Package\Deduplicate Staging Table" />
     <DTS:PrecedenceConstraint
-      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
-      DTS:CreationName=""
-      DTS:DTSID="{534084E6-37BB-4BEC-8A72-3500AAFAFF72}"
-      DTS:From="Package\Create Schema and Table"
-      DTS:LogicalAnd="True"
-      DTS:ObjectName="Constraint 1"
-      DTS:To="Package\Data Flow" />
-    <DTS:PrecedenceConstraint
       DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
       DTS:CreationName=""
       DTS:DTSID="{E925EB30-396F-44D4-954E-91555EADD105}"
@@ -1372,6 +2147,14 @@
       DTS:LogicalAnd="True"
       DTS:ObjectName="Constraint 2"
       DTS:To="Package\Move Invalid Records to Error Table" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 3]"
+      DTS:CreationName=""
+      DTS:DTSID="{6B774FBD-2A73-4A21-A80A-F8200D00AB0E}"
+      DTS:From="Package\Move Invalid Records to Error Table"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 3"
+      DTS:To="Package\Upload to Production" />
   </DTS:PrecedenceConstraints>
   <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
 <!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
@@ -1385,10 +2168,6 @@
     <LayoutInfo>
       <GraphLayout
         Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
-        <NodeLayout
-          Size="216.8,41.6"
-          Id="Package\Create Schema and Table"
-          TopLeft="124.99999627471,33.2222208470842" />
         <NodeLayout
           Size="132,41.6"
           Id="Package\Data Flow"
@@ -1424,28 +2203,6 @@
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package.PrecedenceConstraints[Constraint 1]"
-          TopLeft="231.57499569729,74.8222208470842">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,36.3999967714148"
-              Start="0,0"
-              End="0,28.8999967714148">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,28.8999967714148" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 2]"
           TopLeft="237.637496768311,243.099991659489">
           <EdgeLayout.Curve>
@@ -1459,6 +2216,32 @@
                   Capacity="5">
                   <mssgle:LineSegment
                     End="0,53.4555513105644" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="198.4,41.6"
+          Id="Package\Upload to Production"
+          TopLeft="141.339281502047,393.949190274612" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 3]"
+          TopLeft="240.2821393261,345.655542970054">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,48.293647304558"
+              Start="0,0"
+              End="0,40.793647304558">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,40.793647304558" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -1615,6 +2398,173 @@
   </PipelineComponentMetadata>
   <PipelineComponentMetadata
     design-time-name="Package\Data Flow\Log Data Failed Casting">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <TaskHost
+    design-time-name="Package\Upload to Production">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="156,41.6"
+          Id="Package\Upload to Production\Staging Table"
+          TopLeft="356.666661351919,42.9999993592501" />
+        <NodeLayout
+          Size="138.4,41.6"
+          Id="Package\Upload to Production\Split Data"
+          TopLeft="360.833327956498,138.333331272006" />
+        <EdgeLayout
+          Id="Package\Upload to Production.Paths[OLE DB 源输出]"
+          TopLeft="432.349994654208,84.5999993592501">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,53.7333319127559"
+              Start="0,0"
+              End="0,46.2333319127559">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,46.2333319127559" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="216.8,41.6"
+          Id="Package\Upload to Production\Insert No Matching Data"
+          TopLeft="509.999992400408,250.833329595625" />
+        <EdgeLayout
+          Id="Package\Upload to Production.Paths[No Match Output]"
+          TopLeft="451.766661289831,179.933331272006">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="166.633331110577,70.8999983236194"
+              Start="0,0"
+              End="166.633331110577,63.3999983236194">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,24.846170746524" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,24.846170746524"
+                    Point2="0,28.846170746524"
+                    Point3="4,28.846170746524" />
+                  <mssgle:LineSegment
+                    End="162.633331110577,28.846170746524" />
+                  <mssgle:CubicBezierSegment
+                    Point1="162.633331110577,28.846170746524"
+                    Point2="166.633331110577,28.846170746524"
+                    Point3="166.633331110577,32.846170746524" />
+                  <mssgle:LineSegment
+                    End="166.633331110577,63.3999983236194" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="48.2273100865384,33.846170746524,70.1787109375,10.9208984375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="198.4,41.6"
+          Id="Package\Upload to Production\Upsert Matching Data"
+          TopLeft="198.333330377936,248.333329632878" />
+        <EdgeLayout
+          Id="Package\Upload to Production.Paths[查找匹配输出]"
+          TopLeft="408.299994623164,179.933331272006">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-110.766664245228,68.3999983608723"
+              Start="0,0"
+              End="-110.766664245228,60.8999983608723">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,23.8290279045378" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,23.8290279045378"
+                    Point2="0,27.8290279045378"
+                    Point3="-4,27.8290279045378" />
+                  <mssgle:LineSegment
+                    End="-106.766664245228,27.8290279045378" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-106.766664245228,27.8290279045378"
+                    Point2="-110.766664245228,27.8290279045378"
+                    Point3="-110.766664245228,31.8290279045378" />
+                  <mssgle:LineSegment
+                    End="-110.766664245228,60.8999983608723" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-85.4726875913641,32.8290279045378,60.1787109375,10.9208984375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Upload to Production\Staging Table">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Upload to Production\Split Data">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:boolean">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string">[prod].[Users]</Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:int">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Upload to Production\Insert No Matching Data">
     <Properties>
       <Property>
         <Name>DataSourceViewID</Name>

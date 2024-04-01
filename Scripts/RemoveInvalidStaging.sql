@@ -7,7 +7,7 @@ SELECT
     RegistrationDate, 
     LastLoginDate, 
     PurchaseTotal 
-FROM dbo.TestStaging
+FROM stg.Users
 WHERE 
     UserID IS NULL
     OR FullName IS NULL
@@ -19,7 +19,7 @@ WHERE
 GO
 
 DELETE FROM 
-    dbo.TestStaging
+    stg.Users
 WHERE 
     UserID IS NULL
     OR FullName IS NULL
