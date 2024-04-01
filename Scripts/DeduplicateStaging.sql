@@ -7,7 +7,7 @@ WITH RankedRecords AS (
           RegistrationDate
       ) AS Rank 
     FROM 
-      stg.Users
+      dbo.TestStaging
 ) 
 DELETE FROM 
     RankedRecords 

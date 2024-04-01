@@ -1,19 +1,3 @@
--- Check and create err.Users table if it does not exist
-IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'err.Users') AND type in (N'U'))
-BEGIN
-    CREATE TABLE err.Users (
-        ErroutID INT IDENTITY(1,1) PRIMARY KEY,
-        UserID INT,
-        FullName NVARCHAR(255),
-        Age INT,
-        Email NVARCHAR(255),
-        RegistrationDate DATE,
-        LastLoginDate DATE,
-        PurchaseTotal FLOAT
-    );
-END
-GO
-
 INSERT INTO err.Users (UserID, FullName, Age, Email, RegistrationDate, LastLoginDate, PurchaseTotal) 
 SELECT 
     UserID, 
@@ -23,7 +7,7 @@ SELECT
     RegistrationDate, 
     LastLoginDate, 
     PurchaseTotal 
-FROM stg.Users
+FROM dbo.TestStaging
 WHERE 
     UserID IS NULL
     OR FullName IS NULL
@@ -35,7 +19,7 @@ WHERE
 GO
 
 DELETE FROM 
-    stg.Users 
+    dbo.TestStaging
 WHERE 
     UserID IS NULL
     OR FullName IS NULL

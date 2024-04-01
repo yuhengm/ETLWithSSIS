@@ -11,8 +11,8 @@
   DTS:LocaleID="1033"
   DTS:ObjectName="Package"
   DTS:PackageType="5"
-  DTS:VersionBuild="81"
-  DTS:VersionGUID="{1899AA6A-C1EF-488A-BC20-D183C664DCC8}">
+  DTS:VersionBuild="82"
+  DTS:VersionGUID="{372E656E-14C4-4221-964D-E904168286EA}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -697,7 +697,7 @@
                 <property
                   dataType="System.String"
                   description="指定用于打开行集的数据库对象的名称。"
-                  name="OpenRowset">[stg].[Users]</property>
+                  name="OpenRowset">[TestStaging]</property>
                 <property
                   dataType="System.String"
                   description="指定包含用于打开行集的数据库对象名的变量。"
@@ -830,10 +830,6 @@
                       refId="Package\Data Flow\Load Staging Table.Inputs[OLE DB 目标输入].ExternalColumns[PurchaseTotal]"
                       dataType="r8"
                       name="PurchaseTotal" />
-                    <externalMetadataColumn
-                      refId="Package\Data Flow\Load Staging Table.Inputs[OLE DB 目标输入].ExternalColumns[StgID]"
-                      dataType="i4"
-                      name="StgID" />
                   </externalMetadataColumns>
                 </input>
               </inputs>
@@ -1554,9 +1550,7 @@
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -1578,9 +1572,7 @@
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -1602,9 +1594,7 @@
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>
